@@ -31,7 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
-src/main/webapp
 src/main/resources/application.yaml
 
 .env
