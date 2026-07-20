@@ -95,14 +95,14 @@
                             <div class="mb-3">
                                 <label for="password-check" class="form-label">تاكيد كلمة المرور </label>
                                 <div class="input-holder">
-                                    <input required name="passwordCheck" type="password" class="form-control" id="password-check" placeholder="Enter your password">
+                                    <input required name="passwordCheck" type="password" class="form-control" id="password-check" placeholder="Confirm your password">
                                     <span onclick="togglePassword()"><img src="./svgs/lock-load.svg" alt="icon"></span>
                                 </div>
                             </div>
                         </div>
                         <div class="form-check">
                             <input required class="form-check-input" type="checkbox" value="" id="checkChecked" checked>
-                            <label class="form-check-label" for="checkChecked">
+                            <label class="form-check-label" for="checkChecked" style="margin-right: 27px;">
                                 أوافق على
                                 <a href="#">الشروط والأحكام</a>
                                 و
