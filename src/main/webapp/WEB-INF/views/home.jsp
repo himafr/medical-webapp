@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" >
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="./css/home.css">
         <link rel="stylesheet" href="./responsive.css">
     </head>
-    <body>
+    <body >
         <div class="container">
             <%@ include file="shared/header.jsp" %>
             <%-- hero section --%>

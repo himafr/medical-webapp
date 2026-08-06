@@ -10,7 +10,7 @@
         <title> Doctors | <%= request.getParameter("specialty") != null ? request.getParameter("specialty") : "all" %> </title>
         <link rel="stylesheet" href="/css/bootstrap.min.css">
         <link rel="stylesheet" href="/style.css">
-        <%-- <link rel="stylesheet" href="/css/doctors.css"> --%>
+        <link rel="stylesheet" href="/css/doctors.css">
         <link rel="stylesheet" href="/responsive.css">
     </head>
     <body>
