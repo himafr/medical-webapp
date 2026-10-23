@@ -9,6 +9,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title> my appointments | ${username} </title>
+        <link rel="icon" type="image/svg+xml" href="/images/round_royal_logo.png">
         <link rel="stylesheet" href="./css/bootstrap.min.css">
         <link rel="stylesheet" href="./style.css">
         <link rel="stylesheet" href="./css/patient.css">

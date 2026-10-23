@@ -5,7 +5,7 @@
         <div>
             <div class="text-icon">
                 <div class="footer-logo-holder">
-                    <img src="/svgs/logo-dark.svg" alt="logo" class="logo">
+                    <img src="/images/round_royal_logo.png" width="32" alt="logo" class="logo">
                 </div>
                 <p class="footer-head-line">
                     عيادة الشفاء

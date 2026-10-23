@@ -4,6 +4,8 @@
     <head>
         <meta charset="UTF-8">
         <title>تفعيل الحساب</title>
+        <link rel="icon" type="image/svg+xml" href="/images/round_royal_logo.png">
+
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     </head>
     <body class="bg-light">

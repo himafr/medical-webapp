@@ -3,7 +3,7 @@
 <header>
     <div class="<%= request.getAttribute("username") != null?"hidden-sm":"" %>">
         <div class="header-logo-holder">
-            <img src="/svgs/logo.svg" alt="logo" class="logo">
+            <img src="/images/round_royal_logo.png" width="48" alt="logo" class="logo">
         </div>
         عيادة الشفاء
     </div>
