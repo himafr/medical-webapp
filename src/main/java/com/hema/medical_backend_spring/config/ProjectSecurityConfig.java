@@ -3,6 +3,8 @@ package com.hema.medical_backend_spring.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -47,6 +49,9 @@ public class ProjectSecurityConfig {
                                                 .securityContextRepository(securityContextRepository()))
                                 .authorizeHttpRequests(auth -> auth
                                                 .requestMatchers("/customLogin", "/signup", "/css/**", "/login",
+                                                                "api/auth/login", "api/auth/register",
+                                                                "/api/auth/activate/**", "/api/auth/activate/send",
+                                                                "/api/auth/activate/verify",
                                                                 "/js/**",
                                                                 "/images/**", "/fonts/**", "/", "/contact", "/about",
                                                                 "/svgs/**", "/style.css", "/responsive.css",
@@ -90,18 +95,27 @@ public class ProjectSecurityConfig {
                 return PasswordEncoderFactories.createDelegatingPasswordEncoder();
         }
 
-        @Bean
-         AuthenticationEntryPoint customEntryPoint() {
-                return (request, response, authException) -> {
-                        String uri = request.getRequestURI();
+       @Bean
+AuthenticationEntryPoint customEntryPoint() {
+    return (request, response, authException) -> {
+        String uri = request.getRequestURI();
 
-                        if (uri.equals("/login") || uri.equals("/perform_login")) {
-                                response.sendRedirect("/login");
-                                return;
-                        }
-
-                        response.sendRedirect("/login?redirect=" + uri);
-                };
+        // 1. If the request is for an API endpoint, return JSON
+        if (uri.startsWith("/api/")) {
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write("{\"message\": \"Forbidden: You do not have permission\"}");
+            return;
         }
 
+        // 2. Existing redirect logic for web pages
+        if (uri.equals("/login") || uri.equals("/perform_login")) {
+            response.sendRedirect("/login");
+            return;
+        }
+
+        response.sendRedirect("/login?redirect=" + uri);
+    };
+}
 }

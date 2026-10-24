@@ -12,7 +12,7 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-@ControllerAdvice
+@ControllerAdvice(basePackages = "com.hema.medical_backend_spring.controllers")
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(NoResourceFoundException.class)
