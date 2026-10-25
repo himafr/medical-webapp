@@ -1,5 +1,6 @@
 package com.hema.medical_backend_spring.exception;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +12,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@RestControllerAdvice (basePackages = "com.hema.medical_backend_spring.api")
+@RestControllerAdvice(basePackages = "com.hema.medical_backend_spring.api")
 public class RestExceptionHandler {
 
     @ExceptionHandler(IncorrectPasswordException.class)
@@ -34,4 +35,27 @@ public class RestExceptionHandler {
         return ResponseEntity.badRequest()
                 .body(Map.of("message", "Validation failed", "details", details));
     }
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<Map<String, String>> handleRuntime(RuntimeException ex) {
+        return ResponseEntity.internalServerError().body(Map.of("message", "Internal server error"));
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<Map<String, String>> handleAccessDenied(AccessDeniedException ex) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("message", "غير مصرح لك بالوصول"));
+    }
+
+    // @ExceptionHandler(Exception.class)
+    // public String handleGeneral(Exception ex, Model model) {
+    // model.addAttribute("error", ex.getMessage());
+    // model.addAttribute("status", 500);
+    // return "error";
+    // }
+
+    @ExceptionHandler(NotValidTimeException.class)
+    public ResponseEntity<Map<String, String>> handleValidationErrors(NotValidTimeException ex) {
+        return ResponseEntity.badRequest().body(Map.of("message", ex.getMessage()));
+    }
+
 }

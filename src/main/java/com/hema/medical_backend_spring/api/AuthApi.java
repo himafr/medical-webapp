@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -92,10 +91,4 @@ public class AuthApi {
                 userDetails.getProjectUser().getEmail(), role));
     }
 
-    // /** اختبار سريع أن السيرفر شغال */
-    // @GetMapping("/health")
-    // @ResponseBody
-    // public ResponseEntity<String> health() {
-    // return ResponseEntity.ok("Royal Hospital API is running");
-    // }
 }
