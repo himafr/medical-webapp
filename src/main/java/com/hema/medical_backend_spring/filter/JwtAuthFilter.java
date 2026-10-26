@@ -3,6 +3,8 @@ package com.hema.medical_backend_spring.filter;
 import java.io.IOException;
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
@@ -35,7 +37,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             FilterChain filterChain)
             throws ServletException, IOException {
 
-        String token = extractTokenFromCookie(request);
+        String token = extractToken(request);
 
         if (token == null) {
             HttpSession session = request.getSession(false);
@@ -63,10 +65,21 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                             !requestURI.startsWith("/activate") &&
                             !requestURI.startsWith("/login") &&
                             !requestURI.startsWith("/register")) {
-                        response.sendRedirect("/activate?email=" + email);
-                        return;
+                        if (requestURI.startsWith("/api/")) {
+                            response.setStatus(HttpStatus.FORBIDDEN.value());
+                            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+                            response.setCharacterEncoding("UTF-8");
+                            response.getWriter()
+                                    .write("{\"message\": \"Account is not activated\", \"email\": \"" + email + "\"}");
+                            return;
+                        } else {
+                            response.sendRedirect("/activate?email=" + email);
+                            return;
+                        }
                     }
+
                 }
+
             }
 
             if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
@@ -93,17 +106,36 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 session.setAttribute(
                         HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
                         context);
+                if (!request.getRequestURI().startsWith("/api/")) {
+                    HttpSession session1 = request.getSession(true);
+                    session1.setAttribute(
+                            HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
+                            context);
+                }
 
             }
+
         } catch (Exception e) {
             System.out.println(e);
             SecurityContextHolder.clearContext();
+            if (request.getRequestURI().startsWith("/api/")) {
+                response.setStatus(HttpStatus.UNAUTHORIZED.value());
+                response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write("{\"message\": \"Invalid or expired token\"}");
+            }
         }
 
         filterChain.doFilter(request, response);
     }
 
-    private String extractTokenFromCookie(HttpServletRequest request) {
+    private String extractToken(HttpServletRequest request) {
+
+        String authHeader = request.getHeader("Authorization");
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            return authHeader.substring(7);
+        }
+
         Cookie[] cookies = request.getCookies();
         if (cookies == null)
             return null;

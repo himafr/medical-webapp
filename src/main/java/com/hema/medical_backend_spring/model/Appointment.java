@@ -9,6 +9,8 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
@@ -37,16 +39,19 @@ public class Appointment {
     @ManyToOne
     @JoinColumn(name = "patient_id", nullable = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private Patient patient;
 
     @ManyToOne
     @JoinColumn(name = "service_id")
     @OnDelete(action = OnDeleteAction.SET_NULL)
+    @JsonIgnore
     private MedicalServiceEntity medicalService;
 
     @ManyToOne
     @JoinColumn(name = "doctor_id", nullable = false)
     @OnDelete(action = OnDeleteAction.SET_NULL)
+    @JsonIgnore 
     private Doctor doctor;
 
     // تحديد الخدمة الطبية

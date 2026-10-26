@@ -8,6 +8,8 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
@@ -34,11 +36,13 @@ public class Prescription {
     @ManyToOne
     @JoinColumn(name = "record_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore 
     private MedicalRecord medicalRecord;
-
+    
     @ManyToOne
     @JoinColumn(name = "doctor_id")
     @OnDelete(action = OnDeleteAction.SET_NULL)
+    @JsonIgnore 
     private Doctor doctor;
 
     private LocalDate date;

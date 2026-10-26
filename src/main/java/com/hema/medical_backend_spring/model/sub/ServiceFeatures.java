@@ -2,6 +2,8 @@ package com.hema.medical_backend_spring.model.sub;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hema.medical_backend_spring.model.MedicalRecord;
 import com.hema.medical_backend_spring.model.MedicalServiceEntity;
 
@@ -26,6 +28,7 @@ public class ServiceFeatures {
     @ManyToOne
     @JoinColumn(name = "service_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore 
     private MedicalServiceEntity medicalService;
 
     private String feature;

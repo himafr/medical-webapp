@@ -4,6 +4,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hema.medical_backend_spring.model.MedicalRecord;
 
 import jakarta.persistence.Entity;
@@ -28,6 +29,7 @@ public class Medications {
     @ManyToOne
     @JoinColumn(name = "medical_record_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore 
     private MedicalRecord medicalRecord;
 
     private String medications;

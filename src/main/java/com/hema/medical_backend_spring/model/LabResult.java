@@ -3,6 +3,9 @@ package com.hema.medical_backend_spring.model;
 import java.time.LocalDate;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,6 +28,7 @@ public class LabResult {
     @ManyToOne
     @JoinColumn(name = "record_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore 
     private MedicalRecord medicalRecord;
 
     private String testName;   // تحليل الدم الشامل CBC

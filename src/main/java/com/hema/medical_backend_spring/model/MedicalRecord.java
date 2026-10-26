@@ -8,6 +8,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hema.medical_backend_spring.model.sub.Allergies;
 import com.hema.medical_backend_spring.model.sub.ChronicDiseases;
 import com.hema.medical_backend_spring.model.sub.Medications;
@@ -40,6 +41,7 @@ public class MedicalRecord {
     @OneToOne
     @JoinColumn(name = "patient_id",unique = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore 
     private Patient patient;
     
      @OneToMany(mappedBy = "medicalRecord", cascade = CascadeType.ALL, orphanRemoval = true)

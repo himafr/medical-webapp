@@ -3,6 +3,7 @@ package com.hema.medical_backend_spring.model.sub;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hema.medical_backend_spring.model.Doctor;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,6 +26,7 @@ public class Certification {
     @ManyToOne
     @JoinColumn(name = "doctor_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore 
     private Doctor doctor;
 
     private String name;

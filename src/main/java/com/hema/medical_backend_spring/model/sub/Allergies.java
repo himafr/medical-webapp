@@ -2,6 +2,8 @@ package com.hema.medical_backend_spring.model.sub;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hema.medical_backend_spring.model.MedicalRecord;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,6 +26,7 @@ public class Allergies {
     @ManyToOne
     @JoinColumn(name = "medical_record_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore 
     private MedicalRecord medicalRecord;
 
     private String allergy;
