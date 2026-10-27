@@ -4,6 +4,8 @@ import java.security.Principal;
 import java.util.Map;
 
 import org.springframework.boot.autoconfigure.couchbase.CouchbaseProperties.Authentication;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -40,39 +42,36 @@ public class servicesApi {
 
     // TODO ADD THE SEARCH METHOD
 
-    // @GetMapping("/edit/{id}")
-    // public String getEditServicePage(Authentication authentication, Model model, @PathVariable long id) {
-    //     MedicalServiceEntity service = medicalServiceService.getServiceById(id);
-    //     model.addAttribute("service", service);
-    //     model.addAttribute("features", service.getFeatures());
-    //     if (authentication != null && authentication.isAuthenticated()
-    //             && authentication.getAuthorities().toArray()[0].toString().equals("ADMIN")) {
-    //         return "service/edit-service";
-    //     }
-    //     return new String("services");
-    // }
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse> getEditServicePage(Authentication authentication, @PathVariable long id) {
+        MedicalServiceEntity service = medicalServiceService.getServiceById(id);
+        Map<String, Object> data = Map.of("service", service, "features", service.getFeatures());
+        ApiResponse res = ApiResponse.success("تم جلب بيانات الخدمه مع الرقم التعريفي " + id, data);
+        return ResponseEntity.ok(res);
+    }
 
-    // @PostMapping("/add-service")
-    // public String createService(@ModelAttribute ServiceDto dto, Principal principal,
-    //         RedirectAttributes redirectAttributes) {
-    //     medicalServiceService.createService(dto, principal.getName());
-    //     redirectAttributes.addFlashAttribute("message", "تم انشاء الخدمه بنجاح .");
-    //     return "redirect:/success";
-    // }
+    @PostMapping("/add-service")
+    public ResponseEntity<ApiResponse> createService(@ModelAttribute ServiceDto dto, Principal principal) {
+        medicalServiceService.createService(dto, principal.getName());
+        // TODO check comming data
+        ApiResponse res = ApiResponse.builder().status(201)
+                .message("تم انشاء الخدمة بنجاح بواسطة المستخدم " + principal.getName())
+                .data(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.CREATED).body(res);
+    }
+//TODO CHECK THESE SERVICES LATER
+    @PostMapping("/edit-service/{id}")
+    public ResponseEntity<ApiResponse> updateService(@ModelAttribute ServiceDto dto, Principal principal,
+            RedirectAttributes redirectAttributes, @PathVariable long id) {
+        medicalServiceService.updateService(id, dto);
+        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success("تم تحديث الخدمه بنجاح ."));
+    }
 
-    // @PostMapping("/edit-service/{id}")
-    // public String updateService(@ModelAttribute ServiceDto dto, Principal principal,
-    //         RedirectAttributes redirectAttributes, @PathVariable long id) {
-    //     medicalServiceService.updateService(id, dto);
-    //     redirectAttributes.addFlashAttribute("message", "تم تحديث الخدمه بنجاح .");
-    //     return "redirect:/success";
-    // }
-
-    // @PostMapping("/delete-service/{id}")
-    // public String deleteService(RedirectAttributes redirectAttributes, @PathVariable long id) {
-    //     medicalServiceService.deleteService(id);
-    //     redirectAttributes.addFlashAttribute("message", "تم حذف الخدمه بنجاح .");
-    //     return "redirect:/success";
-    // }
+    @PostMapping("/delete-service/{id}")
+    public ResponseEntity<ApiResponse> deleteService(RedirectAttributes redirectAttributes,
+            @PathVariable long id) {
+        medicalServiceService.deleteService(id);
+        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success("تم حذف الخدمه بنجاح ."));
+    }
 
 }

@@ -70,12 +70,12 @@ public class MedicalServiceService {
 }
 
     public MedicalServiceEntity getServiceById(@NonNull Long id) {
-        return medicalServiceRepository.findById(id).orElseThrow(() -> new RuntimeException("Service not found"));
+        return medicalServiceRepository.findById(id).orElseThrow(() -> new RuntimeException("الخدمة التي تبحث عنها برقم "+id +"غير متوفره حاليا"));
     }
 
     public void createService(ServiceDto dto, String adminEmail) {
         Admin admin = adminRepository.findByEmail(adminEmail)
-                .orElseThrow(() -> new RuntimeException("Admin not found"));
+                .orElseThrow(() -> new RuntimeException("ليس لديك صلاحيه لتعديل بيانات الخدمة"));
 
         MedicalServiceEntity service = new MedicalServiceEntity();
         service.setAdmin(admin);

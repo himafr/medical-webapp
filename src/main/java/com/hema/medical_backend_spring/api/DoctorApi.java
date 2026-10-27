@@ -38,10 +38,7 @@ public class DoctorApi {
 
                 Page<Doctor> doctorsPage = doctorService.getDoctorsBySpecialty(specialty, page, size);
 
-                // List<DoctorResponseDto> doctors = doctorsPage.getContent()
-                // .stream()
-                // .map(DoctorMapper::DoctorToDto)
-                // .toList();
+               
                 ApiResponse res = ApiResponse.builder().status(200).message("جميع الدكاتره").data(doctorsPage)
                                 .build();
 
@@ -56,10 +53,7 @@ public class DoctorApi {
 
                 Page<Doctor> doctorsPage = doctorService.searchDoctors(s, page, size);
 
-                // List<DoctorResponseDto> doctors = doctorsPage.getContent()
-                //                 .stream()
-                //                 .map(DoctorMapper::DoctorToDto)
-                //                 .toList();
+               
 
                 return ResponseEntity.ok().body(ApiResponse.builder().status(200).message("").data(doctorsPage).build());
         }

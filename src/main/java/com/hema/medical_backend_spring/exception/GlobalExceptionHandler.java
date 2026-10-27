@@ -42,7 +42,7 @@ public class GlobalExceptionHandler {
     public Object handleRuntime(RuntimeException ex, Model model, HttpServletRequest request) {
         if (request.getRequestURI().startsWith("/api/")) {
 
-            return ResponseEntity.internalServerError().body(Map.of("message", "Internal server error"));
+            return ResponseEntity.internalServerError().body(Map.of("message", ex.getMessage()));
 
         }
         model.addAttribute("error", ex.getMessage());
