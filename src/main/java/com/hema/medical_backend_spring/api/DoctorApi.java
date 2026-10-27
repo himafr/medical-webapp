@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hema.medical_backend_spring.dto.ApiResponse;
 import com.hema.medical_backend_spring.dto.DoctorResponseDto;
 import com.hema.medical_backend_spring.dto.UpdateDoctorDto;
 import com.hema.medical_backend_spring.mapper.DoctorMapper;
@@ -22,59 +23,52 @@ import com.hema.medical_backend_spring.services.DoctorService;
 
 import lombok.AllArgsConstructor;
 
-@RestController 
+@RestController
 @RequestMapping("/api/doctors")
 @AllArgsConstructor
 public class DoctorApi {
 
-    private final DoctorService doctorService;
-     @GetMapping("")
-    public ResponseEntity<Map<String, Object>> getDoctors(
-            @RequestParam(required = false) String specialty,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "4") int size) {
+        private final DoctorService doctorService;
 
-        Page<Doctor> doctorsPage = doctorService.getDoctorsBySpecialty(specialty, page, size);
+        @GetMapping("")
+        public ResponseEntity<ApiResponse> getDoctors(
+                        @RequestParam(required = false) String specialty,
+                        @RequestParam(defaultValue = "0") int page,
+                        @RequestParam(defaultValue = "4") int size) {
 
-        List<DoctorResponseDto> doctors = doctorsPage.getContent()
-                .stream()
-                .map(DoctorMapper::DoctorToDto)
-                .toList();
+                Page<Doctor> doctorsPage = doctorService.getDoctorsBySpecialty(specialty, page, size);
 
-        return ResponseEntity.ok().body(Map.of(
-                "page", doctorsPage.getNumber(),
-                "number", doctorsPage.getTotalPages(),
-                "doctors", doctors));
-    }
+                // List<DoctorResponseDto> doctors = doctorsPage.getContent()
+                // .stream()
+                // .map(DoctorMapper::DoctorToDto)
+                // .toList();
+                ApiResponse res = ApiResponse.builder().status(200).message("جميع الدكاتره").data(doctorsPage)
+                                .build();
 
-    @GetMapping("/search")
-    public ResponseEntity<Map<String, Object>> searchDoctors(
-            @RequestParam(required = false) String s,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "4") int size) {
+                return ResponseEntity.ok(res);
+        }
 
-        Page<Doctor> doctorsPage = doctorService.searchDoctors(s, page, size);
+        @GetMapping("/search")
+        public ResponseEntity<ApiResponse> searchDoctors(
+                        @RequestParam(required = false) String s,
+                        @RequestParam(defaultValue = "0") int page,
+                        @RequestParam(defaultValue = "4") int size) {
 
-        List<DoctorResponseDto> doctors = doctorsPage.getContent()
-                .stream()
-                .map(DoctorMapper::DoctorToDto)
-                .toList();
+                Page<Doctor> doctorsPage = doctorService.searchDoctors(s, page, size);
 
-        return ResponseEntity.ok().body(Map.of(
-                "doctors", doctors,
-                "page", doctorsPage.getNumber(),
-                "number", doctorsPage.getTotalPages()));
-    }
-    
+                // List<DoctorResponseDto> doctors = doctorsPage.getContent()
+                //                 .stream()
+                //                 .map(DoctorMapper::DoctorToDto)
+                //                 .toList();
 
+                return ResponseEntity.ok().body(ApiResponse.builder().status(200).message("").data(doctorsPage).build());
+        }
 
-    @PostMapping("/update-career-details")
-    public ResponseEntity<Map<String, String>> updateCareerDetails(@ModelAttribute UpdateDoctorDto dto,
-            Authentication authentication) {
-        doctorService.updateDoctor(dto, authentication);
-       return ResponseEntity.ok().body(Map.of("message", "تم تعديل البيانات بنجاح"));
-    }
-
-    // TODO request to be a doctor and the admin will accept or refuse the request
+        @PostMapping("/update-career-details")
+        public ResponseEntity<Map<String, String>> updateCareerDetails(@ModelAttribute UpdateDoctorDto dto,
+                        Authentication authentication) {
+                doctorService.updateDoctor(dto, authentication);
+                return ResponseEntity.ok().body(Map.of("message", "تم تعديل البيانات بنجاح"));
+        }
 
 }

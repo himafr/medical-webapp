@@ -27,11 +27,7 @@ public class ApiController {
     private final MedicalServiceService medicalServiceService;
     
 
-    @GetMapping("/services")
-@ResponseBody
-public List<ServiceResponseDto> getServicesBySpecialization(@RequestParam Specialty specialization) {
-    return medicalServiceService.findBySpecialization(specialization);
-}
+ 
 
     @GetMapping("/appointments/booked-dates")
     @ResponseBody
