@@ -5,7 +5,7 @@ import com.hema.medical_backend_spring.model.Doctor.Specialty;
 import lombok.Data;
 
 @Data
-public class DoctorDto {
+public class UpdateDoctorDto {
   private Specialty specialty;
   private String specialization;
   private String work;

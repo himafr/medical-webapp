@@ -1,8 +1,5 @@
 package com.hema.medical_backend_spring.repository;
 
-
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,12 +12,13 @@ import com.hema.medical_backend_spring.model.Doctor;
 import com.hema.medical_backend_spring.model.Doctor.Specialty;
 
 public interface DoctorRepository extends JpaRepository<Doctor, Long> {
-    
-    Page<Doctor> findBySpecialty(Specialty specialty,Pageable pageable);
 
-    Page<Doctor> findByFullNameContainingIgnoreCaseOrAboutContainingIgnoreCaseOrSpecializationContainingIgnoreCaseOrWorkContainingIgnoreCase(String fullName, String about,String specialization,String work,Pageable pageable);
+    Page<Doctor> findBySpecialty(Specialty specialty, Pageable pageable);
 
     
+    Page<Doctor> findByFullNameContainingIgnoreCaseOrAboutContainingIgnoreCaseOrSpecializationContainingIgnoreCaseOrWorkContainingIgnoreCase(
+            String fullName, String about, String specialization, String work, Pageable pageable);
+
     @Modifying
     @Transactional
     @Query("UPDATE Doctor d SET d.specialization = COALESCE(:specialization, d.specialization), d.work = COALESCE(:work, d.work), d.about = COALESCE(:about, d.about) , d.specialty = COALESCE(:specialty, d.specialty) WHERE d.id = :id")
@@ -28,7 +26,6 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
             @Param("specialization") String specialization,
             @Param("work") String work,
             @Param("about") String about,
-            @Param("specialty") Specialty specialty
-        );
+            @Param("specialty") Specialty specialty);
 
 }

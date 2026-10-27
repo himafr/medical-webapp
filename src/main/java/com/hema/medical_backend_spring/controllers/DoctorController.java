@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.hema.medical_backend_spring.dto.DoctorDto;
+import com.hema.medical_backend_spring.dto.UpdateDoctorDto;
 import com.hema.medical_backend_spring.mapper.HelperDto;
 import com.hema.medical_backend_spring.model.Doctor;
 import com.hema.medical_backend_spring.services.DoctorService;
@@ -60,7 +60,7 @@ public class DoctorController {
     }
 
     @PostMapping("/update-career-details")
-    public String updateCareerDetails(@ModelAttribute DoctorDto dto, Authentication authentication,
+    public String updateCareerDetails(@ModelAttribute UpdateDoctorDto dto, Authentication authentication,
             RedirectAttributes redirectAttributes) {
         doctorService.updateDoctor(dto, authentication);
         redirectAttributes.addFlashAttribute("successMessage", "تم تعديل البيانات بنجاح");

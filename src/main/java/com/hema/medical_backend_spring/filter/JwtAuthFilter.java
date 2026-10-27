@@ -56,7 +56,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
             if (!jwtService.isTokenExpired(token)) {
 
-                // isActive check برا الـ authentication check
                 if (!isActive) {
                     String requestURI = request.getRequestURI();
                     String method = request.getMethod();
@@ -123,6 +122,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 response.setContentType(MediaType.APPLICATION_JSON_VALUE);
                 response.setCharacterEncoding("UTF-8");
                 response.getWriter().write("{\"message\": \"Invalid or expired token\"}");
+                return;
             }
         }
 
