@@ -4,8 +4,8 @@ import java.security.Principal;
 import java.util.Map;
 
 import org.springframework.boot.autoconfigure.couchbase.CouchbaseProperties.Authentication;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,6 +18,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hema.medical_backend_spring.dto.ApiResponse;
 import com.hema.medical_backend_spring.dto.ServiceDto;
+import com.hema.medical_backend_spring.dto.ServiceResponseDto;
+import com.hema.medical_backend_spring.mapper.ServiceMapper;
 import com.hema.medical_backend_spring.model.MedicalServiceEntity;
 import com.hema.medical_backend_spring.services.MedicalServiceService;
 
@@ -34,9 +36,12 @@ public class servicesApi {
             @RequestParam(required = false) String specialty,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "4") int size) {
-        ApiResponse res = ApiResponse.builder().status(200).message("تم تحصيل الخدمات بنجاح ")
-                .data(medicalServiceService.getServicesBySpecialty(specialty, page, size)).build();
+        Page<ServiceResponseDto> data = medicalServiceService.getServicesBySpecialty(specialty, page, size)
+                .map(ServiceMapper::mapFromMedicalServiceToDto);
 
+        ApiResponse res = ApiResponse.builder().status(200)
+                .message("تم تحصيل الخدمات بنجاح ")
+                .data(data).build();
         return ResponseEntity.ok(res);
     }
 
@@ -59,7 +64,8 @@ public class servicesApi {
                 .data(HttpStatus.CREATED).build();
         return ResponseEntity.status(HttpStatus.CREATED).body(res);
     }
-//TODO CHECK THESE SERVICES LATER
+
+    // TODO CHECK THESE SERVICES LATER
     @PostMapping("/edit-service/{id}")
     public ResponseEntity<ApiResponse> updateService(@ModelAttribute ServiceDto dto, Principal principal,
             RedirectAttributes redirectAttributes, @PathVariable long id) {

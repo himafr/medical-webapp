@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.hema.medical_backend_spring.dto.ServiceDto;
 import com.hema.medical_backend_spring.dto.ServiceResponseDto;
+import com.hema.medical_backend_spring.mapper.ServiceMapper;
 import com.hema.medical_backend_spring.model.Admin;
 import com.hema.medical_backend_spring.model.Doctor.Specialty;
 import com.hema.medical_backend_spring.model.MedicalServiceEntity;
@@ -57,15 +58,7 @@ public class MedicalServiceService {
     public List<ServiceResponseDto> findBySpecialization(Specialty specialization) {
     return medicalServiceRepository.findBySpecialization(specialization ,Pageable.unpaged())
             .stream()
-            .map(s -> {
-                ServiceResponseDto dto = new ServiceResponseDto();
-                dto.setId(s.getId());
-                dto.setName(s.getName());
-                dto.setPrice(s.getPrice());
-                dto.setStartFrom(s.getStartFrom());
-                dto.setConsulating(s.getConsulating());
-                return dto;
-            })
+            .map(ServiceMapper::mapFromMedicalServiceToDto)
             .collect(Collectors.toList());
 }
 

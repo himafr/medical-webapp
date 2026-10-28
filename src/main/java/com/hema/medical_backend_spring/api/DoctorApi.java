@@ -1,6 +1,5 @@
 package com.hema.medical_backend_spring.api;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.data.domain.Page;
@@ -17,8 +16,6 @@ import com.hema.medical_backend_spring.dto.ApiResponse;
 import com.hema.medical_backend_spring.dto.DoctorResponseDto;
 import com.hema.medical_backend_spring.dto.UpdateDoctorDto;
 import com.hema.medical_backend_spring.mapper.DoctorMapper;
-import com.hema.medical_backend_spring.mapper.HelperDto;
-import com.hema.medical_backend_spring.model.Doctor;
 import com.hema.medical_backend_spring.services.DoctorService;
 
 import lombok.AllArgsConstructor;
@@ -36,9 +33,9 @@ public class DoctorApi {
                         @RequestParam(defaultValue = "0") int page,
                         @RequestParam(defaultValue = "4") int size) {
 
-                Page<Doctor> doctorsPage = doctorService.getDoctorsBySpecialty(specialty, page, size);
+                Page<DoctorResponseDto> doctorsPage = doctorService.getDoctorsBySpecialty(specialty, page, size)
+                                .map(DoctorMapper::DoctorToDto);
 
-               
                 ApiResponse res = ApiResponse.builder().status(200).message("جميع الدكاتره").data(doctorsPage)
                                 .build();
 
@@ -51,11 +48,10 @@ public class DoctorApi {
                         @RequestParam(defaultValue = "0") int page,
                         @RequestParam(defaultValue = "4") int size) {
 
-                Page<Doctor> doctorsPage = doctorService.searchDoctors(s, page, size);
+                Page<DoctorResponseDto> doctorsPage = doctorService.searchDoctors(s, page, size).map(DoctorMapper::DoctorToDto);
 
-               
-
-                return ResponseEntity.ok().body(ApiResponse.builder().status(200).message("").data(doctorsPage).build());
+                return ResponseEntity.ok()
+                                .body(ApiResponse.builder().status(200).message("").data(doctorsPage).build());
         }
 
         @PostMapping("/update-career-details")
