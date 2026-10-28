@@ -1,6 +1,7 @@
 package com.hema.medical_backend_spring.api;
 
 import java.security.Principal;
+import java.time.LocalDate;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +35,16 @@ public class AppointmentApi {
        return ResponseEntity.ok(ApiResponse.success("",appointmentsPage));
     }
 
+    @GetMapping("/booked-dates")
+    public ResponseEntity<ApiResponse> getBookedDates(@RequestParam Long doctorId) {
+        return ResponseEntity.ok(ApiResponse.success("booked dates",appointmentService.getFullyBookedDates(doctorId)));
+    }
+    @GetMapping("/available-slots")
     
+    public ResponseEntity<ApiResponse> getAvailableSlots(@RequestParam Long doctorId,
+                                           @RequestParam String date) {
+        return ResponseEntity.ok(ApiResponse.success("available slots",appointmentService.getBookedSlots(doctorId, LocalDate.parse(date))));
+    }
 
     @PostMapping("")
     public ResponseEntity<ApiResponse> bookAppointment(@RequestBody  AppointmentDto dto, Principal principal) {

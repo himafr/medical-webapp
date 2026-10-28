@@ -14,7 +14,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-
 document
   .getElementById("specialization")
   .addEventListener("change", handleSpecializationChange);
@@ -36,6 +35,7 @@ function handleSpecializationChange() {
 
   fetch("/api/doctors?specialization=" + specialization)
     .then((r) => r.json())
+    .then((r) => r.data.content)
     .then((doctors) => {
       doctorSelect.innerHTML = "<option>اختر الطبيب المفضل</option>";
       if (doctors.length === 0) {
@@ -71,6 +71,7 @@ function handleSpecializationChange() {
 function fetchServices(specialization) {
   fetch("/api/services?specialization=" + specialization)
     .then((res) => res.json())
+    .then((r) => r.data.content)
     .then((services) => {
       serviceSelect.innerHTML = "<option>اختر الخدمة المطلوبة</option>";
       if (services.length === 0) {
@@ -134,6 +135,7 @@ function checkEnableDatePicker() {
 
   fetch("/api/appointments/booked-dates?doctorId=" + doctorId)
     .then((r) => r.json())
+    .then((d) => d.data)
     .then((dates) => {
       bookedDates = dates;
     });
@@ -171,10 +173,12 @@ document
         selected,
     )
       .then((r) => r.json())
+      .then((d) => d.data)
       .then((bookedSlots) => {
         slotsContainer.style.display = "block";
         document.querySelectorAll(".time-slot").forEach((slot) => {
           const value = slot.querySelector("input[type='radio']").value;
+          console.log(value)
           if (bookedSlots.includes(value)) {
             slot.classList.add("time-slot-disabled");
           }
