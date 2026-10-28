@@ -63,7 +63,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                     if (method.equals("POST") &&
                             !requestURI.startsWith("/activate") &&
                             !requestURI.startsWith("/login") &&
-                            !requestURI.startsWith("/register")) {
+                            !requestURI.startsWith("/register")&&
+                            !requestURI.startsWith("/api/activation")) {
                         if (requestURI.startsWith("/api/")) {
                             response.setStatus(HttpStatus.FORBIDDEN.value());
                             response.setContentType(MediaType.APPLICATION_JSON_VALUE);

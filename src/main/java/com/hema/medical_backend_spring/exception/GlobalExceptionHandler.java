@@ -1,17 +1,16 @@
 package com.hema.medical_backend_spring.exception;
 
-import java.util.Map;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
+
+import com.hema.medical_backend_spring.dto.ApiResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -31,7 +30,7 @@ public class GlobalExceptionHandler {
         }
         if (request.getRequestURI().startsWith("/api/")) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(Map.of("message", "الصفحة غير موجودة"));
+                    .body(ApiResponse.error(404, "الصفحة غير موجودة"));
         }
         model.addAttribute("error", "الصفحة غير موجودة");
         model.addAttribute("status", 404);
@@ -42,7 +41,7 @@ public class GlobalExceptionHandler {
     public Object handleRuntime(RuntimeException ex, Model model, HttpServletRequest request) {
         if (request.getRequestURI().startsWith("/api/")) {
 
-            return ResponseEntity.internalServerError().body(Map.of("message", ex.getMessage()));
+            return ResponseEntity.internalServerError().body(ApiResponse.error(500, ex.getMessage()));
 
         }
         model.addAttribute("error", ex.getMessage());
@@ -53,8 +52,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AccessDeniedException.class)
     public Object handleAccessDenied(AccessDeniedException ex, Model model, HttpServletRequest request) {
         if (request.getRequestURI().startsWith("/api/")) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("message",
-                    ex.getMessage()));
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ApiResponse.error(403, ex.getMessage()));
         }
         model.addAttribute("error", "غير مصرح لك بالوصول");
         model.addAttribute("status", 403);
@@ -64,10 +62,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public Object handleGeneral(Exception ex, Model model, HttpServletRequest request) {
         if (request.getRequestURI().startsWith("/api/")) {
-            return ResponseEntity.badRequest().body(Map.of("error", ex.getMessage()));
+            return ResponseEntity.badRequest().body(ApiResponse.error(400, ex.getMessage()));
         }
         model.addAttribute("error", ex.getMessage());
-        model.addAttribute("status", 500);
+        model.addAttribute("status", 400);
         return "error";
     }
 
@@ -76,7 +74,7 @@ public class GlobalExceptionHandler {
         if (request.getRequestURI().startsWith("/api/")) {
 
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(Map.of("message", "Invalid email or password"));
+                    .body(ApiResponse.error(401, ex.getMessage()));
         }
         redirectAttributes.addFlashAttribute("failMessage", ex.getMessage());
         return "redirect:/fail";
@@ -85,7 +83,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NotValidTimeException.class)
     public Object handleValidationErrors(NotValidTimeException ex, Model model, HttpServletRequest request) {
         if (request.getRequestURI().startsWith("/api/")) {
-            return ResponseEntity.badRequest().body(Map.of("message", ex.getMessage()));
+            return ResponseEntity.badRequest().body(ApiResponse.error(400, ex.getMessage()));
         }
         model.addAttribute("error", ex.getMessage());
         model.addAttribute("status", 400);
@@ -96,7 +94,7 @@ public class GlobalExceptionHandler {
     public Object handleValidationErrors(UserNotFoundException ex, Model model, HttpServletRequest request) {
         if (request.getRequestURI().startsWith("/api/")) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(Map.of("message", ex.getMessage()));
+                    .body(ApiResponse.error(404, ex.getMessage()));
         }
         model.addAttribute("error", ex.getMessage());
         model.addAttribute("status", 400);

@@ -43,6 +43,7 @@ public class AppointmentService {
         }
 
         public void createAppointment(AppointmentDto dto, String patientEmail) {
+                // TODO CHECK DATE TOO
                 if (!AppointmentValidator.isTimeAllowed(dto.getAppointmentTime())) {
                         throw new NotValidTimeException("هذا الوقت غير مسموح به");
                 }

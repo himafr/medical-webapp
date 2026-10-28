@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,13 +49,14 @@ public class DoctorApi {
                         @RequestParam(defaultValue = "0") int page,
                         @RequestParam(defaultValue = "4") int size) {
 
-                Page<DoctorResponseDto> doctorsPage = doctorService.searchDoctors(s, page, size).map(DoctorMapper::DoctorToDto);
+                Page<DoctorResponseDto> doctorsPage = doctorService.searchDoctors(s, page, size)
+                                .map(DoctorMapper::DoctorToDto);
 
                 return ResponseEntity.ok()
                                 .body(ApiResponse.builder().status(200).message("").data(doctorsPage).build());
         }
 
-        @PostMapping("/update-career-details")
+        @PutMapping("")
         public ResponseEntity<Map<String, String>> updateCareerDetails(@ModelAttribute UpdateDoctorDto dto,
                         Authentication authentication) {
                 doctorService.updateDoctor(dto, authentication);

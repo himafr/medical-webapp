@@ -17,11 +17,12 @@ public class CertificationService {
     private final CertificationRepository certificationRepository;
 
     public Certification getCertificationById(Long id, Authentication authentication) {
-        return certificationRepository.findByIdAndDoctorId(id, HelperDto.getProjectUser(authentication).getId())
+        return certificationRepository.findByIdAndDoctorId(id, HelperDto.getProjectUser(authentication).getId().longValue())
                 .orElseThrow(() -> new PageNotFoundException("could not find a certificate with this id "));
     }
 
     public void addCertification(CertificationDto dto, Authentication authentication) {
+        // TODO MAKE SOME FIELD REQUIRED
         certificationRepository.insertCertification(HelperDto.getProjectUser(authentication).getId(), dto.getName(),
                 dto.getPlace(), dto.getOrganization(), dto.getPhoto());
     }

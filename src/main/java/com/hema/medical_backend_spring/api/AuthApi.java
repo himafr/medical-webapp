@@ -10,14 +10,12 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hema.medical_backend_spring.config.CustomUserDetails;
-import com.hema.medical_backend_spring.config.ProjectAuthenticationProvider;
 import com.hema.medical_backend_spring.dto.LoginResponse;
+import com.hema.medical_backend_spring.dto.RegisterRequest;
 import com.hema.medical_backend_spring.exception.IncorrectPasswordException;
-import com.hema.medical_backend_spring.model.ProjectUser;
 import com.hema.medical_backend_spring.services.JwtService;
 import com.hema.medical_backend_spring.services.UserService;
 
@@ -30,7 +28,6 @@ public class AuthApi {
 
     private final UserDetailsService userDetailsService;
     private final JwtService jwtService;
-    private final ProjectAuthenticationProvider authService;
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
 
@@ -50,20 +47,20 @@ public class AuthApi {
                     userDetails.getProjectUser().getFullName(),
                     userDetails.getProjectUser().getEmail(), role));
         }
-        throw new IncorrectPasswordException(username);
+        throw new IncorrectPasswordException("كلمة المرور او اسم المستخدم غير صحيح");
 
     }
 
     // /** تسجيل مستخدم جديد */
     @PostMapping("/register")
     @ResponseBody
-    public ResponseEntity<LoginResponse> register(@RequestBody ProjectUser user,
-            @RequestParam(name = "passwordCheck", required = false) String passwordCheck) {
+    public ResponseEntity<LoginResponse> register(@RequestBody RegisterRequest user) {
         // chek fields
         if (user.getEmail() == null || !StringUtils.hasText(user.getPassword())
                 || !StringUtils.hasText(user.getFullName())) {
             throw new IllegalArgumentException("جميع الحقول مطلوبة");
         }
+        String passwordCheck = user.getPasswordCheck();
         // check matching password
         if (user.getPassword() == null || !user.getPassword().equals(passwordCheck)) {
             throw new IllegalArgumentException("كلمات المرور غير متطابقة");

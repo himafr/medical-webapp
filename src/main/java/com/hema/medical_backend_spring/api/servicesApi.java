@@ -7,10 +7,12 @@ import org.springframework.boot.autoconfigure.couchbase.CouchbaseProperties.Auth
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,14 +50,14 @@ public class servicesApi {
     // TODO ADD THE SEARCH METHOD
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse> getEditServicePage(Authentication authentication, @PathVariable long id) {
+    public ResponseEntity<ApiResponse> getServiceById(Authentication authentication, @PathVariable long id) {
         MedicalServiceEntity service = medicalServiceService.getServiceById(id);
         Map<String, Object> data = Map.of("service", service, "features", service.getFeatures());
         ApiResponse res = ApiResponse.success("تم جلب بيانات الخدمه مع الرقم التعريفي " + id, data);
         return ResponseEntity.ok(res);
     }
 
-    @PostMapping("/add-service")
+    @PostMapping("")
     public ResponseEntity<ApiResponse> createService(@ModelAttribute ServiceDto dto, Principal principal) {
         medicalServiceService.createService(dto, principal.getName());
         // TODO check comming data
@@ -66,14 +68,14 @@ public class servicesApi {
     }
 
     // TODO CHECK THESE SERVICES LATER
-    @PostMapping("/edit-service/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<ApiResponse> updateService(@ModelAttribute ServiceDto dto, Principal principal,
             RedirectAttributes redirectAttributes, @PathVariable long id) {
         medicalServiceService.updateService(id, dto);
         return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success("تم تحديث الخدمه بنجاح ."));
     }
 
-    @PostMapping("/delete-service/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse> deleteService(RedirectAttributes redirectAttributes,
             @PathVariable long id) {
         medicalServiceService.deleteService(id);
