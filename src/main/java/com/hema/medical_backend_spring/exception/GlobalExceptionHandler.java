@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -100,5 +101,24 @@ public class GlobalExceptionHandler {
         model.addAttribute("status", 400);
         return "error";
     }
+    
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Object handleValidation(MethodArgumentNotValidException ex, Model model, HttpServletRequest request) {
+        if (request.getRequestURI().startsWith("/api/")) {
+            String message = ex.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .map(e -> e.getField() + ": " + e.getDefaultMessage())
+                .findFirst()
+                .orElse("بيانات غير صحيحة");
+
+        return ResponseEntity.badRequest().body(ApiResponse.error(400,message));
+        }
+        model.addAttribute("error", ex.getMessage());
+        model.addAttribute("status", 400);
+        return "error";
+       
+    }
+
 
 }

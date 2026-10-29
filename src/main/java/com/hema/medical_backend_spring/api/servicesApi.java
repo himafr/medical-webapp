@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,6 +26,7 @@ import com.hema.medical_backend_spring.mapper.ServiceMapper;
 import com.hema.medical_backend_spring.model.MedicalServiceEntity;
 import com.hema.medical_backend_spring.services.MedicalServiceService;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -58,9 +60,8 @@ public class servicesApi {
     }
 
     @PostMapping("")
-    public ResponseEntity<ApiResponse> createService(@ModelAttribute ServiceDto dto, Principal principal) {
+    public ResponseEntity<ApiResponse> createService(@Valid @RequestBody  ServiceDto dto, Principal principal) {
         medicalServiceService.createService(dto, principal.getName());
-        // TODO check comming data
         ApiResponse res = ApiResponse.builder().status(201)
                 .message("تم انشاء الخدمة بنجاح بواسطة المستخدم " + principal.getName())
                 .data(HttpStatus.CREATED).build();
@@ -69,7 +70,7 @@ public class servicesApi {
 
     // TODO CHECK THESE SERVICES LATER
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse> updateService(@ModelAttribute ServiceDto dto, Principal principal,
+    public ResponseEntity<ApiResponse> updateService(@RequestBody ServiceDto dto, Principal principal,
             RedirectAttributes redirectAttributes, @PathVariable long id) {
         medicalServiceService.updateService(id, dto);
         return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success("تم تحديث الخدمه بنجاح ."));

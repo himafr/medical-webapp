@@ -18,6 +18,7 @@ import com.hema.medical_backend_spring.dto.AppointmentDto;
 import com.hema.medical_backend_spring.model.Appointment;
 import com.hema.medical_backend_spring.services.AppointmentService;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -47,9 +48,9 @@ public class AppointmentApi {
     }
 
     @PostMapping("")
-    public ResponseEntity<ApiResponse> bookAppointment(@RequestBody  AppointmentDto dto, Principal principal) {
+    public ResponseEntity<ApiResponse> bookAppointment(@Valid @RequestBody  AppointmentDto dto, Principal principal) {
         appointmentService.createAppointment(dto, principal.getName());
-        return ResponseEntity.ok(ApiResponse.success(""));
+        return ResponseEntity.ok(ApiResponse.success("Appointment booked successfully"));
     }
 
     // المريض يحجز

@@ -21,6 +21,7 @@ import com.hema.medical_backend_spring.mapper.CertificationMapper;
 import com.hema.medical_backend_spring.model.sub.Certification;
 import com.hema.medical_backend_spring.services.CertificationService;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -37,21 +38,21 @@ public class CertificationApi {
     }
 
     @PostMapping("")
-    public ResponseEntity<ApiResponse> addCertification(@RequestBody CertificationDto certification,
+    public ResponseEntity<ApiResponse> addCertification(@Valid @RequestBody CertificationDto certification,
             Authentication authentication) {
         certificationService.addCertification(certification, authentication);
         return ResponseEntity.ok(ApiResponse.success("تم اضافة الشهاده بنجاح"));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse> editCertification(@RequestBody CertificationDto certification,
+    public ResponseEntity<ApiResponse> editCertification( @RequestBody CertificationDto certification,
             Authentication authentication, @PathVariable Long id) {
         certificationService.editCertification(CertificationMapper.toEntity(certification, id, null), authentication);
         return ResponseEntity.ok(ApiResponse.success("تم تعديل الشهاده بنجاح"));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse> deleteCertification(@RequestBody CertificationDto certification,
+    public ResponseEntity<ApiResponse> deleteCertification(
             Authentication authentication, @PathVariable Long id) {
         int result = certificationService.deleteCertification(id, authentication);
         if (result == 1) {

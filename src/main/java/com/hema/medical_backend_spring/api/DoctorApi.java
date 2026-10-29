@@ -6,9 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -57,7 +56,7 @@ public class DoctorApi {
         }
 
         @PutMapping("")
-        public ResponseEntity<Map<String, String>> updateCareerDetails(@ModelAttribute UpdateDoctorDto dto,
+        public ResponseEntity<Map<String, String>> updateCareerDetails(@RequestBody  UpdateDoctorDto dto,
                         Authentication authentication) {
                 doctorService.updateDoctor(dto, authentication);
                 return ResponseEntity.ok().body(Map.of("message", "تم تعديل البيانات بنجاح"));
