@@ -48,6 +48,7 @@ public class HomeController {
                 return "profile/doctor";
             } else if (authentication.getAuthorities().toArray()[0].toString().equals("ADMIN")) {
                 Admin admin = adminService.getAdmin(userDetails.getProjectUser().getId()).orElse(null);
+                
                 model.addAttribute("user", admin);
                 return "profile/admin";
             }

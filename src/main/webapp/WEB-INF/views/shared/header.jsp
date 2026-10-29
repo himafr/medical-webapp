@@ -56,7 +56,7 @@
             <img src="/svgs/arrow-left-short.svg" alt="menu" class="user-small-menu">
             <div>
                 <p class="text-primary">${username} </p>
-                <p class="text-gold">${role =="PATIENT"?"مريض ذهبي ": "دكتور ذهبي " }</p>
+                <p class="text-gold">${role =="PATIENT"?"مريض ذهبي ":role =="ADMIN"?"مسؤول ذهبي" :"دكتور ذهبي " }</p>
 
             </div>
             <img src="/images/default.png" width="40" alt="user" class="avatar">

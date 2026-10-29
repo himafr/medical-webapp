@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hema.medical_backend_spring.dto.ApiResponse;
 import com.hema.medical_backend_spring.dto.ServiceDto;
@@ -68,16 +66,14 @@ public class servicesApi {
         return ResponseEntity.status(HttpStatus.CREATED).body(res);
     }
 
-    // TODO CHECK THESE SERVICES LATER
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse> updateService(@RequestBody ServiceDto dto, Principal principal,
-            RedirectAttributes redirectAttributes, @PathVariable long id) {
+    public ResponseEntity<ApiResponse> updateService(@RequestBody ServiceDto dto, Principal principal, @PathVariable long id) {
         medicalServiceService.updateService(id, dto);
         return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success("تم تحديث الخدمه بنجاح ."));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse> deleteService(RedirectAttributes redirectAttributes,
+    public ResponseEntity<ApiResponse> deleteService(
             @PathVariable long id) {
         medicalServiceService.deleteService(id);
         return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success("تم حذف الخدمه بنجاح ."));
