@@ -724,7 +724,7 @@ button[type="submit"]:disabled::after {
 }
 
 .note {
-  height: 44px;
+  min-height: 44px;
   gap: 8px;
   border-radius: 9.6px;
   padding-top: 12px;
@@ -751,6 +751,9 @@ button[type="submit"]:disabled::after {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
  
+}
+.gap-3{
+  gap: 16px;
 }
 
 @keyframes spin {

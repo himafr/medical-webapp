@@ -66,10 +66,13 @@
                                         <option value="">اختر التخصص الطبي</option>
                                         <<%
                                         MedicalServiceEntity service = (MedicalServiceEntity) request.getAttribute("service");
+                                        String currentSpec = (service != null && service.getSpecialization() != null)
+                                        ? service.getSpecialization().toString()
+                                        : "GENERAL";
                                         for (Specialty sp : Specialty.values()) {
                                         %>
                                         <option value="<%= sp.name() %>"
-                                            <%= sp.name().equals(service.getSpecialization().toString()) ? "selected" : "" %>
+                                            <%= sp.name().equals(currentSpec) ? "selected" : "" %>
                                             >
                                             <%= HelperDto.getSpecialtyString(sp) %>
 

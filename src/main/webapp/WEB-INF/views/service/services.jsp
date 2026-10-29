@@ -63,7 +63,7 @@
             </section>
         </div>
         <section class="section-three">
-            <div class="grid-3 gap-5">
+            <div class="grid-3 gap-3">
                 <% List<MedicalServiceEntity> services =(List<MedicalServiceEntity>) request.getAttribute("services"); %>
                 <% for(MedicalServiceEntity service:services){%>
 

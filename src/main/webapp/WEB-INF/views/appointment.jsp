@@ -121,7 +121,7 @@
                                     </div>
                                 </div>
 
-                                <div class="mb-3 mt-3">
+                                <div class="mb-3 mt-3 col-12">
                                     <label for="notes" class="form-label text-primary">ملاحظات طبية إضافية</label>
                                     <textarea class="form-control" id="notes" name="notes" rows="5" placeholder="يرجى كتابة أي ملاحظات أو استفسارات طبية ترغب في مشاركتها مع الطبيب..."></textarea>
                                 </div>
