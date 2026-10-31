@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hema.medical_backend_spring.dto.UpdatePasswordDto;
-import com.hema.medical_backend_spring.dto.UpdateUserPersonalDetailsDto;
+import com.hema.medical_backend_spring.dto.UserPersonalDetailsDto;
 import com.hema.medical_backend_spring.services.UserService;
 
 import jakarta.servlet.http.Cookie;
@@ -25,7 +25,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/update-personal-details")
-    public String updatePatient(@ModelAttribute UpdateUserPersonalDetailsDto dto, Principal principal) {
+    public String updatePatient(@ModelAttribute UserPersonalDetailsDto dto, Principal principal) {
         userService.updateUser(dto, principal.getName());
         return "redirect:/home";
     }

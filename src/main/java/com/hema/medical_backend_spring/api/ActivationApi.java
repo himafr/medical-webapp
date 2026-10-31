@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hema.medical_backend_spring.config.CustomUserDetails;
 import com.hema.medical_backend_spring.dto.ApiResponse;
-import com.hema.medical_backend_spring.dto.LoginResponse;
 import com.hema.medical_backend_spring.services.JwtService;
 import com.hema.medical_backend_spring.services.UserService;
 

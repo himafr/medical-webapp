@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import com.hema.medical_backend_spring.config.CustomUserDetails;
 import com.hema.medical_backend_spring.dto.UpdatePasswordDto;
 import com.hema.medical_backend_spring.dto.UpdatePatientEmergencyDto;
-import com.hema.medical_backend_spring.dto.UpdateUserPersonalDetailsDto;
+import com.hema.medical_backend_spring.dto.UserPersonalDetailsDto;
 import com.hema.medical_backend_spring.exception.IncorrectPasswordException;
 import com.hema.medical_backend_spring.mapper.HelperDto;
 import com.hema.medical_backend_spring.mapper.UserMapper;
@@ -78,7 +78,7 @@ public class UserService {
 
     }
 
-    public void updateUser(UpdateUserPersonalDetailsDto dto, String email) {
+    public void updateUser(UserPersonalDetailsDto dto, String email) {
         String name = (dto.getFullName() == null || dto.getFullName().isBlank()) ? null : dto.getFullName();
         String address = (dto.getAddress() == null || dto.getAddress().isBlank()) ? null : dto.getAddress();
         String gender = (dto.getGender() == null || dto.getGender().isBlank()) ? null : dto.getGender();

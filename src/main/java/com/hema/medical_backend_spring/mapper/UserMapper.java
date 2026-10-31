@@ -1,21 +1,24 @@
 package com.hema.medical_backend_spring.mapper;
 
-import com.hema.medical_backend_spring.dto.UpdateUserPersonalDetailsDto;
+import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
+
+import com.hema.medical_backend_spring.dto.UserPersonalDetailsDto;
 import com.hema.medical_backend_spring.model.ProjectUser;
+
 
 public class UserMapper {
 
-    public static UpdateUserPersonalDetailsDto mapToUpdateUserPersonalDetailsDto(ProjectUser user,
-            UpdateUserPersonalDetailsDto detailsDto) {
-        detailsDto.setAddress(user.getAddress());
-        detailsDto.setDateOfBirth(user.getDateOfBirth());
-        detailsDto.setFullName(user.getFullName());
-        detailsDto.setGender(user.getGender());
-        detailsDto.setPhoneNumber(user.getPhoneNumber());
-        return detailsDto;
+    public static UserPersonalDetailsDto mapToUserPersonalDetailsDto(ProjectUser user) {
+        return UserPersonalDetailsDto.builder()
+                .address(user.getAddress())
+                .dateOfBirth(user.getDateOfBirth())
+                .fullName(user.getFullName())
+                .gender(user.getGender())
+                .phoneNumber(user.getPhoneNumber())
+                .build();
     }
 
-    public static ProjectUser mapToProjectUser(UpdateUserPersonalDetailsDto dto, ProjectUser user) {
+    public static ProjectUser mapToProjectUser(UserPersonalDetailsDto dto, ProjectUser user) {
         if (dto.getAddress() != null && !dto.getAddress().isBlank())
             user.setAddress(dto.getAddress());
         if (dto.getDateOfBirth() != null)

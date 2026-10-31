@@ -5,6 +5,7 @@ import java.security.Principal;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hema.medical_backend_spring.dto.ApiResponse;
 import com.hema.medical_backend_spring.dto.UpdatePasswordDto;
-import com.hema.medical_backend_spring.dto.UpdateUserPersonalDetailsDto;
+import com.hema.medical_backend_spring.dto.UserPersonalDetailsDto;
+import com.hema.medical_backend_spring.mapper.UserMapper;
 import com.hema.medical_backend_spring.services.UserService;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,8 +26,19 @@ import lombok.AllArgsConstructor;
 public class UserApi {
     private final UserService userService;
 
+    @GetMapping("")
+    public ResponseEntity<ApiResponse> updateUser(Principal principal) {
+        try {
+
+            return ResponseEntity.ok(ApiResponse.success("تم جلب البيانات بنجاح ",
+                    userService.findByEmail(principal.getName()).map(UserMapper::mapToUserPersonalDetailsDto)));
+        } catch (Exception e) {
+            return ResponseEntity.status(400).body(ApiResponse.error(400, "خطا اثناء جلب البيانات "));
+        }
+    }
+
     @PutMapping("")
-    public ResponseEntity<ApiResponse> updatePatient(@RequestBody UpdateUserPersonalDetailsDto dto,
+    public ResponseEntity<ApiResponse> updateUser(@RequestBody UserPersonalDetailsDto dto,
             Principal principal) {
         try {
             userService.updateUser(dto, principal.getName());
@@ -38,7 +51,7 @@ public class UserApi {
     @PutMapping("/update-password")
     public ResponseEntity<ApiResponse> updatePassword(@RequestBody UpdatePasswordDto dto, Principal principal) {
         userService.updatePassword(dto, principal.getName());
-       return ResponseEntity.ok(ApiResponse.success( "تم تغير الرقم السري بنجاح "));
+        return ResponseEntity.ok(ApiResponse.success("تم تغير الرقم السري بنجاح "));
     }
 
     @DeleteMapping("")
