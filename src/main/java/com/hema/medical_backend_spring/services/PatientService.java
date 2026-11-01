@@ -1,16 +1,15 @@
 package com.hema.medical_backend_spring.services;
 
-import java.util.Objects;
 import java.util.Optional;
 
-import org.springframework.security.core.Authentication;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import com.hema.medical_backend_spring.dto.UpdateBloodTypeDto;
 import com.hema.medical_backend_spring.dto.UpdatePatientEmergencyDto;
-import com.hema.medical_backend_spring.mapper.PatientMapper;
+import com.hema.medical_backend_spring.model.MedicalRecord;
 import com.hema.medical_backend_spring.model.Patient;
-import com.hema.medical_backend_spring.model.Patient.BloodType;
+import com.hema.medical_backend_spring.repository.MedicalRecordRepository;
 import com.hema.medical_backend_spring.repository.PatientRepository;
 
 import lombok.AllArgsConstructor;
@@ -20,8 +19,15 @@ import lombok.AllArgsConstructor;
 public class PatientService {
     private final PatientRepository patientRepository;
 
+    private final MedicalRecordRepository medicalRecordRepository;
+
     public Optional<Patient> getPatient(long userId) {
         return patientRepository.findById(userId);
+    }
+
+    public MedicalRecord getMedicalRecord(@NonNull Long patientId) {
+        return medicalRecordRepository.findById(patientId)
+                .orElseThrow(() -> new RuntimeException("Medical record not found for patient with ID: " + patientId));
     }
 
     public void updatePatientEmergency(UpdatePatientEmergencyDto dto, String email) {
