@@ -1,5 +1,6 @@
 package com.hema.medical_backend_spring.services;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Optional;
@@ -25,7 +26,6 @@ import com.hema.medical_backend_spring.repository.MedicalRecordRepository;
 import com.hema.medical_backend_spring.repository.PatientRepository;
 import com.hema.medical_backend_spring.repository.UserRepo;
 import org.springframework.security.core.userdetails.UserDetailsService;
-
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
@@ -83,30 +83,33 @@ public class UserService {
         String address = (dto.getAddress() == null || dto.getAddress().isBlank()) ? null : dto.getAddress();
         String gender = (dto.getGender() == null || dto.getGender().isBlank()) ? null : dto.getGender();
         String phone = (dto.getPhoneNumber() == null || dto.getPhoneNumber().isBlank()) ? null : dto.getPhoneNumber();
+        if (dto.getDateOfBirth() != null && dto.getDateOfBirth().isAfter(LocalDate.now().minusYears(12))) {
+            throw new IllegalArgumentException("يجب أن يكون العمر 12 عامًا على الأقل");
+        }
 
         int updatedRows = userRepo.updateUserInfo(email, name, dto.getDateOfBirth(), address, gender, phone);
 
         if (updatedRows == 0) {
-            throw new RuntimeException("User not found");
+            throw new com.hema.medical_backend_spring.exception.UserNotFoundException("لم يتم العثور على المستخدم");
         }
     }
 
     @Transactional
     public void updatePassword(UpdatePasswordDto dto, String email) {
         if (dto.getNewPass().length() < 7) {
-            throw new IncorrectPasswordException("الرقم السري يجب ان يكون اكثر من 8 حروف او ارقام");
+            throw new IncorrectPasswordException("يجب ألا تقل كلمة المرور الجديدة عن 7 أحرف أو أرقام");
         }
 
         ProjectUser user = userRepo.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new com.hema.medical_backend_spring.exception.UserNotFoundException("لم يتم العثور على المستخدم"));
 
         // check old password matches
         if (!passwordEncoder.matches(dto.getOldPass(), user.getPassword())) {
-            throw new IncorrectPasswordException("الرقم السري غير صحيح ");
+            throw new IncorrectPasswordException("كلمة المرور الحالية غير صحيحة");
         }
 
         if (dto.getNewPass().equals(dto.getOldPass())) {
-            throw new IncorrectPasswordException("الرقم السري الجديد مطابق للرقم السري القديم ");
+            throw new IncorrectPasswordException("يجب أن تختلف كلمة المرور الجديدة عن الحالية");
         }
 
         // update to new password
@@ -125,7 +128,7 @@ public class UserService {
 
     public void sendActivationPin(String email) {
         ProjectUser user = userRepo.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new com.hema.medical_backend_spring.exception.UserNotFoundException("لم يتم العثور على المستخدم"));
 
         String pin = generatePin();
         user.setActivationPin(pin);
@@ -135,9 +138,9 @@ public class UserService {
         emailService.sendActivationPin(email, pin);
     }
 
-    public boolean activateAccount(String email, String pin ,HttpServletResponse response) {
+    public boolean activateAccount(String email, String pin, HttpServletResponse response) {
         ProjectUser user = userRepo.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new com.hema.medical_backend_spring.exception.UserNotFoundException("لم يتم العثور على المستخدم"));
 
         if (user.getActivationPin() == null ||
                 !user.getActivationPin().equals(pin) ||
@@ -151,12 +154,12 @@ public class UserService {
         userRepo.save(user);
 
         CustomUserDetails userDetails = (CustomUserDetails) userDetailsService.loadUserByUsername(user.getEmail());
-         // جدد الـ token
-    String newToken = jwtService.generateToken(userDetails);
-    Cookie cookie = new Cookie("jwt", newToken);
-    cookie.setHttpOnly(true);
-    cookie.setPath("/");
-    response.addCookie(cookie);
+        // جدد الـ token
+        String newToken = jwtService.generateToken(userDetails);
+        Cookie cookie = new Cookie("jwt", newToken);
+        cookie.setHttpOnly(true);
+        cookie.setPath("/");
+        response.addCookie(cookie);
 
         return true;
     }

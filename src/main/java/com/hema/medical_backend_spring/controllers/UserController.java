@@ -32,7 +32,7 @@ public class UserController {
  @PostMapping("/update-password")
 public String updatePassword(@ModelAttribute UpdatePasswordDto dto, Principal principal,RedirectAttributes redirectAttributes) {
     userService.updatePassword(dto, principal.getName());
-    redirectAttributes.addFlashAttribute("successMessage","تم تغير الرقم السري بنجاح ");
+    redirectAttributes.addFlashAttribute("successMessage", "تم تغيير كلمة المرور بنجاح");
     return "redirect:/success";
 }
 

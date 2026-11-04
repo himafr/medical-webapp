@@ -32,7 +32,7 @@
                             </div>
                             <div class="lc-block mb-3">
                                 <div editable="rich">
-                                    <h1 class="display-1 fw-bold text-muted">Error</h1>
+                                    <h1 class="display-1 fw-bold text-muted">حدث خطأ</h1>
 
                                 </div>
                             </div>

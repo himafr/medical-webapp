@@ -33,7 +33,7 @@ public class UserApi {
             return ResponseEntity.ok(ApiResponse.success("تم جلب البيانات بنجاح ",
                     userService.findByEmail(principal.getName()).map(UserMapper::mapToUserPersonalDetailsDto)));
         } catch (Exception e) {
-            return ResponseEntity.status(400).body(ApiResponse.error(400, "خطا اثناء جلب البيانات "));
+            return ResponseEntity.status(400).body(ApiResponse.error(400, "تعذر جلب البيانات. يرجى المحاولة مرة أخرى"));
         }
     }
 
@@ -44,20 +44,20 @@ public class UserApi {
             userService.updateUser(dto, principal.getName());
             return ResponseEntity.ok(ApiResponse.success("تم تحديث البيانات بنجاح "));
         } catch (Exception e) {
-            return ResponseEntity.status(400).body(ApiResponse.error(400, "خطا اثناء تحديث البيانات "));
+            return ResponseEntity.status(400).body(ApiResponse.error(400, "تعذر تحديث البيانات. يرجى التحقق من المدخلات والمحاولة مرة أخرى"));
         }
     }
 
     @PutMapping("/update-password")
     public ResponseEntity<ApiResponse> updatePassword(@RequestBody UpdatePasswordDto dto, Principal principal) {
         userService.updatePassword(dto, principal.getName());
-        return ResponseEntity.ok(ApiResponse.success("تم تغير الرقم السري بنجاح "));
+        return ResponseEntity.ok(ApiResponse.success("تم تغيير كلمة المرور بنجاح"));
     }
 
     @DeleteMapping("")
     public ResponseEntity<ApiResponse> postMethodName(Authentication authentication, HttpServletResponse response) {
         userService.deleteAccount(authentication);
-        return ResponseEntity.ok(ApiResponse.success("تم حذف الحساب بنجاح "));
+        return ResponseEntity.ok(ApiResponse.success("تم حذف الحساب بنجاح"));
     }
 
 }

@@ -223,14 +223,14 @@
                                         <div class="mb-3" style="width:100%">
                                             <label for="password" class="form-label">كلمة المرور الحالية </label>
                                             <div class="input-holder">
-                                                <input required type="password" name="oldPass" class="form-control" id="password" placeholder="Enter your password">
+                                                <input required type="password" name="oldPass" class="form-control" id="password" placeholder="أدخل كلمة المرور الحالية">
                                                 <span onclick="togglePassword()"><img src="./svgs/lock.svg" alt="icon"></span>
                                             </div>
                                         </div>
                                         <div class="mb-3" style="width:100%">
                                             <label for="password" class="form-label"> كلمة المرور الجديدة </label>
                                             <div class="input-holder">
-                                                <input required type="password" name="newPass" class="form-control" id="newPassword" placeholder="Enter your password">
+                                                <input required type="password" name="newPass" class="form-control" id="newPassword" placeholder="أدخل كلمة المرور الجديدة">
                                                 <span onclick="togglePassword()"><img src="./svgs/lock.svg" alt="icon"></span>
                                             </div>
                                         </div>

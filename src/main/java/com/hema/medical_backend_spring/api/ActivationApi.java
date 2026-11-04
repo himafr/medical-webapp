@@ -31,7 +31,7 @@ public class ActivationApi {
     public ResponseEntity<ApiResponse> sendPin(Authentication authentication) {
         String email = authentication.getName();
         userService.sendActivationPin(email);
-        return ResponseEntity.ok(ApiResponse.success("activation pin has been sent to :" + email));
+        return ResponseEntity.ok(ApiResponse.success("تم إرسال رمز التفعيل إلى بريدك الإلكتروني"));
     }
 
     @PutMapping("")
@@ -46,6 +46,6 @@ public class ActivationApi {
             String token = jwtService.generateToken(userDetails);
 
             return ResponseEntity.accepted()
-                    .body(ApiResponse.builder().status(202).message("your account has been verified").data(token).build());
-        }return ResponseEntity.badRequest().body(ApiResponse.error(400,"الكود غلط أو انتهت صلاحيته"));
+                    .body(ApiResponse.builder().status(202).message("تم تفعيل حسابك بنجاح").data(token).build());
+        }return ResponseEntity.badRequest().body(ApiResponse.error(400,"رمز التفعيل غير صحيح أو انتهت صلاحيته"));
 }}

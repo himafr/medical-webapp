@@ -2,8 +2,6 @@ package com.hema.medical_backend_spring.api;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hema.medical_backend_spring.dto.ApiResponse;
 // TODO DO
@@ -34,21 +31,21 @@ public class CertificationApi {
     public ResponseEntity<ApiResponse> getCertificationById(@PathVariable Long id,
             Authentication authentication) {
         Certification certification = certificationService.getCertificationById(id, authentication);
-        return ResponseEntity.ok(ApiResponse.success(" cert", certification));
+        return ResponseEntity.ok(ApiResponse.success("تم جلب بيانات الشهادة بنجاح", certification));
     }
 
     @PostMapping("")
     public ResponseEntity<ApiResponse> addCertification(@Valid @RequestBody CertificationDto certification,
             Authentication authentication) {
         certificationService.addCertification(certification, authentication);
-        return ResponseEntity.ok(ApiResponse.success("تم اضافة الشهاده بنجاح"));
+        return ResponseEntity.ok(ApiResponse.success("تمت إضافة الشهادة بنجاح"));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse> editCertification( @RequestBody CertificationDto certification,
             Authentication authentication, @PathVariable Long id) {
         certificationService.editCertification(CertificationMapper.toEntity(certification, id, null), authentication);
-        return ResponseEntity.ok(ApiResponse.success("تم تعديل الشهاده بنجاح"));
+        return ResponseEntity.ok(ApiResponse.success("تم تعديل الشهادة بنجاح"));
     }
 
     @DeleteMapping("/{id}")
@@ -56,9 +53,9 @@ public class CertificationApi {
             Authentication authentication, @PathVariable Long id) {
         int result = certificationService.deleteCertification(id, authentication);
         if (result == 1) {
-            return ResponseEntity.ok(ApiResponse.success("تم حذف الشهاده بنجاح"));
+            return ResponseEntity.ok(ApiResponse.success("تم حذف الشهادة بنجاح"));
         } else {
-            return ResponseEntity.ok(ApiResponse.error(400, "عذرا حدث خطا اثناء مسح الشهاده "));
+            return ResponseEntity.badRequest().body(ApiResponse.error(400, "تعذر حذف الشهادة. يرجى المحاولة مرة أخرى"));
 
         }
     }

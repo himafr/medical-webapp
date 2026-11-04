@@ -39,7 +39,7 @@ public class CertificationController {
     public String addCertification(@ModelAttribute CertificationDto certification, Authentication authentication,
             RedirectAttributes redirectAttributes) {
         certificationService.addCertification(certification, authentication);
-        redirectAttributes.addFlashAttribute("successMessage", "تم اضافة الشهاده بنجاح");
+        redirectAttributes.addFlashAttribute("successMessage", "تمت إضافة الشهادة بنجاح");
         return "redirect:/success";
     }
 
@@ -47,7 +47,7 @@ public class CertificationController {
     public String editCertification(@ModelAttribute CertificationDto certification, Authentication authentication,
             RedirectAttributes redirectAttributes, @PathVariable Long id) {
         certificationService.editCertification(CertificationMapper.toEntity(certification, id, null), authentication);
-        redirectAttributes.addFlashAttribute("successMessage", "تم تعديل الشهاده بنجاح");
+        redirectAttributes.addFlashAttribute("successMessage", "تم تعديل الشهادة بنجاح");
         return "redirect:/success";
     }
 
@@ -56,10 +56,10 @@ public class CertificationController {
             RedirectAttributes redirectAttributes, @PathVariable Long id) {
        int result=certificationService.deleteCertification(id, authentication);
        if (result==1) {
-           redirectAttributes.addFlashAttribute("successMessage", "تم حذف الشهاده بنجاح");
+           redirectAttributes.addFlashAttribute("successMessage", "تم حذف الشهادة بنجاح");
            return "redirect:/success";
         }else{
-           redirectAttributes.addFlashAttribute("failMessage", "عذرا حدث خطا اثناء مسح الشهاده ");
+           redirectAttributes.addFlashAttribute("failMessage", "تعذر حذف الشهادة. يرجى المحاولة مرة أخرى");
            return "redirect:/fail";
 
        }

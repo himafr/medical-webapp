@@ -101,13 +101,13 @@ public class AuthController {
         // check if its valid name
         if (!userService.isValidEmail(user.getEmail())) {
             System.out.println(userService.isValidEmail(user.getEmail()));
-            model.addAttribute("error", "البريد الالكتروني غير صالح");
+            model.addAttribute("error", "صيغة البريد الإلكتروني غير صحيحة");
             return "auth/signup";
         }
 
         // check if user exist
         if (userService.findByEmail(user.getEmail()).isPresent()) {
-            model.addAttribute("error", "البريد الالكتروني مستخدم بالفعل");
+            model.addAttribute("error", "هذا البريد الإلكتروني مسجل بالفعل");
             return "auth/signup";
         }
 
@@ -122,7 +122,7 @@ public class AuthController {
             @RequestParam(name = "passwordCheck", required = false) String passwordCheck,
             Model model, Authentication authentication) {
         if (!authentication.getAuthorities().toArray()[0].toString().equals("ADMIN")) {
-            model.addAttribute("error", "غير مصرح لك بالوصول لهذه الصفحة");
+            model.addAttribute("error", "ليس لديك صلاحية للوصول إلى هذه الصفحة");
             return "auth/doctor-signup";
         }
 
@@ -139,13 +139,13 @@ public class AuthController {
         // check if its valid name
         if (!userService.isValidEmail(user.getEmail())) {
             System.out.println(userService.isValidEmail(user.getEmail()));
-            model.addAttribute("error", "البريد الالكتروني غير صالح");
+            model.addAttribute("error", "صيغة البريد الإلكتروني غير صحيحة");
             return "auth/doctor-signup";
         }
 
         // check if user exist
         if (userService.findByEmail(user.getEmail()).isPresent()) {
-            model.addAttribute("error", "البريد الالكتروني مستخدم بالفعل");
+            model.addAttribute("error", "هذا البريد الإلكتروني مسجل بالفعل");
             return "auth/doctor-signup";
         }
         userService.registerDoctor(user);

@@ -143,7 +143,7 @@
                                         .map(Allergies::getAllergy)
                                         .collect(java.util.stream.Collectors.toList());
                                     %>
-                                    <%= allergies.isEmpty()?"no data": String.join(" , ", allergies) %>
+                                    <%= allergies.isEmpty()?"لا توجد بيانات": String.join(" ، ", allergies) %>
                                 </div>
                                 <div class="medical-row"><span class="medical-label">الأمراض المزمنة</span><span class="medical-val">
                                     <%
@@ -152,7 +152,7 @@
                                         .map(ChronicDiseases::getDisease)
                                         .collect(java.util.stream.Collectors.toList());
                                     %>
-                                    <%=  chronicDiseases.isEmpty() ?"no data": String.join(" , ", chronicDiseases) %>
+                                    <%=  chronicDiseases.isEmpty() ?"لا توجد بيانات": String.join(" ، ", chronicDiseases) %>
                                 </span></div>
                                 <div class="medical-row"><span class="medical-label">الأدوية الحالية</span><span class="medical-val">
                                     <%
@@ -161,7 +161,7 @@
                                         .map(Medications::getMedications)
                                         .collect(java.util.stream.Collectors.toList());
                                     %>
-                                    <%=  medications.isEmpty() ?"no data": String.join(" , ", medications) %>
+                                    <%=  medications.isEmpty() ?"لا توجد بيانات": String.join(" ، ", medications) %>
                                 </span></div>
                             </div>
                         </div>
@@ -292,7 +292,7 @@
                                 <%
                                 } else {
                                 %>
-                                <div>no data </div>
+                                <div>لا توجد بيانات متاحة</div>
                                 <%
                                 }
                             %>
@@ -311,14 +311,14 @@
                                     <div class="mb-3" style="width:100%">
                                         <label for="password" class="form-label">كلمة المرور الحالية </label>
                                         <div class="input-holder">
-                                            <input required type="password" name="oldPass" class="form-control" id="password" placeholder="Enter your password">
+                                            <input required type="password" name="oldPass" class="form-control" id="password" placeholder="أدخل كلمة المرور الحالية">
                                             <span onclick="togglePassword()"><img src="./svgs/lock.svg" alt="icon"></span>
                                         </div>
                                     </div>
                                     <div class="mb-3" style="width:100%">
                                         <label for="password" class="form-label"> كلمة المرور الجديدة </label>
                                         <div class="input-holder">
-                                            <input required type="password" name="newPass" class="form-control" id="newPassword" placeholder="Enter your password">
+                                            <input required type="password" name="newPass" class="form-control" id="newPassword" placeholder="أدخل كلمة المرور الجديدة">
                                             <span onclick="togglePassword()"><img src="./svgs/lock.svg" alt="icon"></span>
                                         </div>
                                     </div>

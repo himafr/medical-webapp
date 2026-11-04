@@ -53,7 +53,7 @@ public class DoctorController {
     public String getCareerPage(Authentication authentication, Model model) {
         Doctor doctor = doctorService.getDoctor(
                 HelperDto.getProjectUser(authentication).getId())
-                .orElseThrow(() -> new RuntimeException("Doctor not found"));
+                .orElseThrow(() -> new com.hema.medical_backend_spring.exception.UserNotFoundException("لم يتم العثور على الطبيب"));
 
         model.addAttribute("doctor", doctor);
         return "doctor/update-details";

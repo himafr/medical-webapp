@@ -49,7 +49,7 @@ public class ActivationController {
             return "redirect:/login?activated=true";
         }
         model.addAttribute("email", email);
-        model.addAttribute("error", "الكود غلط أو انتهت صلاحيته");
+        model.addAttribute("error", "رمز التفعيل غير صحيح أو انتهت صلاحيته");
         return "activate";
     }
 }

@@ -5,9 +5,9 @@ import lombok.Data;
 
 @Data
 public class CertificationDto {
-     @NotNull (message = "اسم الشهاده مطلوب")
+     @NotNull (message = "اسم الشهادة مطلوب")
      private String name;
-     @NotNull (message = "مكان الحصول على الشهاده مطلوب")
+     @NotNull (message = "مكان الحصول على الشهادة مطلوب")
      private String place;
      @NotNull (message = "اسم المؤسسة مطلوب")
      private String organization;

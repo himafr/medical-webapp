@@ -179,7 +179,7 @@
                 <div class="col ">
                     <div class="row">
                         <div class=" col-8 col-md-6" >
-                            <input type="text"  class="form-control"  placeholder="email " >
+                            <input type="text"  class="form-control"  placeholder="البريد الإلكتروني" >
                         </div>
                         <button href="#" class="col green-card-contact  btn-gold text-gold " style="border-radius: 12px; padding:3px; line-height: normal; width: 100%;"> انضم لفريقنا </button>
                     </div>

@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title> Success Page  </title>
+        <title>تمت العملية بنجاح</title>
 
         <link rel="stylesheet" href="./css/bootstrap.min.css">
         <link rel="stylesheet" href="./style.css">
@@ -77,10 +77,10 @@
                         <div class="congratulation-contents-icon">
                             <img src="/svgs/check-mark.svg" width="80">
                         </div>
-                        <h4 class="congratulation-contents-title"> Congratulations! </h4>
+                        <h4 class="congratulation-contents-title">تمت العملية بنجاح</h4>
                         <p class="congratulation-contents-para " style="color:green"> ${successMessage} </p>
                         <div class="btn-wrapper mt-4">
-                            <a href="/home" class="btn-primary btn-bg-1"> Go to Home </a>
+                            <a href="/home" class="btn-primary btn-bg-1">العودة إلى الرئيسية</a>
                         </div>
                     </div>
                 </div>

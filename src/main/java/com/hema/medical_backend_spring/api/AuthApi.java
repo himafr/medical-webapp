@@ -47,7 +47,7 @@ public class AuthApi {
                     userDetails.getProjectUser().getFullName(),
                     userDetails.getProjectUser().getEmail(), role));
         }
-        throw new IncorrectPasswordException("كلمة المرور او اسم المستخدم غير صحيح");
+        throw new IncorrectPasswordException("البريد الإلكتروني أو كلمة المرور غير صحيحة");
 
     }
 
@@ -68,12 +68,12 @@ public class AuthApi {
         // check if its valid name
         if (!userService.isValidEmail(user.getEmail())) {
             System.out.println(userService.isValidEmail(user.getEmail()));
-            throw new IllegalArgumentException("البريد الالكتروني غير صالح");
+            throw new IllegalArgumentException("صيغة البريد الإلكتروني غير صحيحة");
         }
 
         // check if user exist
         if (userService.findByEmail(user.getEmail()).isPresent()) {
-            throw new IllegalArgumentException("البريد الالكتروني مستخدم بالفعل");
+            throw new IllegalArgumentException("هذا البريد الإلكتروني مسجل بالفعل");
         }
 
         System.out.println(user.toString());

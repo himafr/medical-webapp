@@ -38,7 +38,7 @@ public class AppointmentService {
                 Pageable pageable = PageRequest.of(page, size);
 
                 Patient patient = patientRepository.findByEmail(patientEmail)
-                                .orElseThrow(() -> new UserNotFoundException("Patient not found"));
+                                .orElseThrow(() -> new UserNotFoundException("لم يتم العثور على المريض"));
                 return appointmentRepository.findByPatient(patient, pageable);
         }
 
@@ -48,17 +48,17 @@ public class AppointmentService {
                         throw new NotValidTimeException("هذا الوقت غير مسموح به");
                 }
                 Patient patient = patientRepository.findByEmail(patientEmail)
-                                .orElseThrow(() -> new UserNotFoundException("Patient not found"));
+                                .orElseThrow(() -> new UserNotFoundException("لم يتم العثور على المريض"));
                 @SuppressWarnings("null")
                 Doctor doctor = doctorRepository.findById(dto.getDoctorId())
-                                .orElseThrow(() -> new UserNotFoundException("Doctor not found"));
+                                .orElseThrow(() -> new UserNotFoundException("لم يتم العثور على الطبيب"));
                 @SuppressWarnings("null")
                 MedicalServiceEntity service = medicalServiceRepository.findById(dto.getServiceId())
-                                .orElseThrow(() -> new UserNotFoundException("Service not found"));
+                                .orElseThrow(() -> new UserNotFoundException("لم يتم العثور على الخدمة المطلوبة"));
 
                 boolean slotTaken = AppointmentValidator.isSlotTaken(appointmentRepository, dto);
                 if (slotTaken)
-                        throw new RuntimeException("هذا الموعد محجوز بالفعل");
+                        throw new IllegalArgumentException("هذا الموعد محجوز بالفعل. يرجى اختيار موعد آخر");
 
                 Appointment appointment = new Appointment();
                 appointment.setPatient(patient);

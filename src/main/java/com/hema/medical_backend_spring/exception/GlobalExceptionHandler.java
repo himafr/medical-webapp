@@ -41,11 +41,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(RuntimeException.class)
     public Object handleRuntime(RuntimeException ex, Model model, HttpServletRequest request) {
         if (request.getRequestURI().startsWith("/api/")) {
-
-            return ResponseEntity.internalServerError().body(ApiResponse.error(500, ex.getMessage()));
-
+            return ResponseEntity.internalServerError()
+                    .body(ApiResponse.error(500, "حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى لاحقًا"));
         }
-        model.addAttribute("error", ex.getMessage());
+        model.addAttribute("error", "حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى لاحقًا");
         model.addAttribute("status", 500);
         return "error";
     }
@@ -53,7 +52,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AccessDeniedException.class)
     public Object handleAccessDenied(AccessDeniedException ex, Model model, HttpServletRequest request) {
         if (request.getRequestURI().startsWith("/api/")) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ApiResponse.error(403, ex.getMessage()));
+                return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(ApiResponse.error(403, "غير مصرح لك بتنفيذ هذا الإجراء"));
         }
         model.addAttribute("error", "غير مصرح لك بالوصول");
         model.addAttribute("status", 403);
@@ -62,6 +62,17 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public Object handleGeneral(Exception ex, Model model, HttpServletRequest request) {
+        if (request.getRequestURI().startsWith("/api/")) {
+            return ResponseEntity.internalServerError()
+                    .body(ApiResponse.error(500, "حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى لاحقًا"));
+        }
+        model.addAttribute("error", "حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى لاحقًا");
+        model.addAttribute("status", 500);
+        return "error";
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public Object handleInvalidArgument(IllegalArgumentException ex, Model model, HttpServletRequest request) {
         if (request.getRequestURI().startsWith("/api/")) {
             return ResponseEntity.badRequest().body(ApiResponse.error(400, ex.getMessage()));
         }
@@ -104,17 +115,17 @@ public class GlobalExceptionHandler {
     
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Object handleValidation(MethodArgumentNotValidException ex, Model model, HttpServletRequest request) {
-        if (request.getRequestURI().startsWith("/api/")) {
-            String message = ex.getBindingResult()
+        String message = ex.getBindingResult()
                 .getFieldErrors()
                 .stream()
-                .map(e -> e.getField() + ": " + e.getDefaultMessage())
+                .map(error -> error.getDefaultMessage())
                 .findFirst()
-                .orElse("بيانات غير صحيحة");
+                .orElse("يرجى مراجعة البيانات المدخلة");
 
-        return ResponseEntity.badRequest().body(ApiResponse.error(400,message));
+        if (request.getRequestURI().startsWith("/api/")) {
+            return ResponseEntity.badRequest().body(ApiResponse.error(400, message));
         }
-        model.addAttribute("error", ex.getMessage());
+        model.addAttribute("error", message);
         model.addAttribute("status", 400);
         return "error";
        

@@ -25,7 +25,7 @@ public class ProjectAuthenticationProvider implements AuthenticationProvider {
         if (passwordEncoder.matches(password, userDetails.getPassword())) {
             return new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
         } else {
-            throw new BadCredentialsException("Invalid Password");
+            throw new BadCredentialsException("كلمة المرور أو البريد الإلكتروني غير صحيح");
         }
 
     }

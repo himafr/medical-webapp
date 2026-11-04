@@ -15,11 +15,11 @@ public class ServiceDto {
     private String description;
     @NotNull (message = "سعر الخدمة مطلوب")
     private Double price;
-    @NotNull (message = "معاد البداية للخدمة مطلوب")
+    @NotNull (message = "تاريخ بدء الخدمة مطلوب")
     private Double startFrom;
     private Double consulating;
     @NotNull (message = "التخصص للخدمة مطلوب")
     private Specialty specialization;
-    @NotNull (message = "الميزات للخدمة مطلوبة")
+    @NotNull (message = "مزايا الخدمة مطلوبة")
     private List<String> features; // غيرها لـ String بسيط
 }

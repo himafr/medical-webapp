@@ -27,7 +27,7 @@ public class PatientService {
 
     public MedicalRecord getMedicalRecord(@NonNull Long patientId) {
         return medicalRecordRepository.findById(patientId)
-                .orElseThrow(() -> new RuntimeException("Medical record not found for patient with ID: " + patientId));
+                .orElseThrow(() -> new com.hema.medical_backend_spring.exception.UserNotFoundException("لم يتم العثور على الملف الطبي"));
     }
 
     public void updatePatientEmergency(UpdatePatientEmergencyDto dto, String email) {
@@ -39,7 +39,7 @@ public class PatientService {
         int updatedRows = patientRepository.updateEmergencyContact(email, name, address);
 
         if (updatedRows == 0) {
-            throw new RuntimeException("User not found");
+            throw new com.hema.medical_backend_spring.exception.UserNotFoundException("لم يتم العثور على المستخدم");
         }
     }
 
@@ -47,7 +47,7 @@ public class PatientService {
         int updatedRows = patientRepository.updateBloodType(email, dto.getBloodType());
 
         if (updatedRows == 0) {
-            throw new RuntimeException("User not found");
+            throw new com.hema.medical_backend_spring.exception.UserNotFoundException("لم يتم العثور على المستخدم");
         }
     }
 

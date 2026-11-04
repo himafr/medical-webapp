@@ -5,9 +5,9 @@ import lombok.Data;
 
 @Data
 public class UpdatePasswordDto {
-    @NotNull (message = "الرقم السري القديم مطلوب")
+    @NotNull (message = "كلمة المرور الحالية مطلوبة")
     private String oldPass;
-    @NotNull (message = "الرقم السري الجديد مطلوب")
+    @NotNull (message = "كلمة المرور الجديدة مطلوبة")
     private String newPass;
 }
 

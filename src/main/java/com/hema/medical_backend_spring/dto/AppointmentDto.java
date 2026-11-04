@@ -8,9 +8,9 @@ import lombok.Data;
 
 @Data
 public class AppointmentDto {
-    @NotNull(message = "معرف الدكتور مطلوب") 
+    @NotNull(message = "معرّف الطبيب مطلوب")
     private Long doctorId;
-    @NotNull(message = "معرف الخدمة مطلوب") 
+    @NotNull(message = "معرّف الخدمة مطلوب")
     private Long serviceId;
     @NotNull(message = "تاريخ الموعد مطلوب") 
     private LocalDate appointmentDate;

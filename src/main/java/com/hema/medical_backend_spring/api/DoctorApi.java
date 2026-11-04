@@ -36,7 +36,7 @@ public class DoctorApi {
                 Page<DoctorResponseDto> doctorsPage = doctorService.getDoctorsBySpecialty(specialty, page, size)
                                 .map(DoctorMapper::DoctorToDto);
 
-                ApiResponse res = ApiResponse.builder().status(200).message("جميع الدكاتره").data(doctorsPage)
+                ApiResponse res = ApiResponse.builder().status(200).message("تم عرض الأطباء بنجاح").data(doctorsPage)
                                 .build();
 
                 return ResponseEntity.ok(res);
@@ -52,7 +52,7 @@ public class DoctorApi {
                                 .map(DoctorMapper::DoctorToDto);
 
                 return ResponseEntity.ok()
-                                .body(ApiResponse.builder().status(200).message("").data(doctorsPage).build());
+                                .body(ApiResponse.builder().status(200).message("تم عرض نتائج البحث بنجاح").data(doctorsPage).build());
         }
 
         @PutMapping("")

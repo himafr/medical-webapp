@@ -70,7 +70,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
                             response.setCharacterEncoding("UTF-8");
                             response.getWriter()
-                                    .write("{\"message\": \"Account is not activated\", \"email\": \"" + email + "\"}");
+                                    .write("{\"message\": \"حسابك غير مفعّل. يرجى تفعيله للمتابعة\", \"email\": \"" + email + "\"}");
                             return;
                         } else {
                             response.sendRedirect("/activate?email=" + email);
@@ -122,7 +122,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 response.setStatus(HttpStatus.UNAUTHORIZED.value());
                 response.setContentType(MediaType.APPLICATION_JSON_VALUE);
                 response.setCharacterEncoding("UTF-8");
-                response.getWriter().write("{\"message\": \"Invalid or expired token\"}");
+                response.getWriter().write("{\"message\": \"رمز الدخول غير صالح أو انتهت صلاحيته\"}");
                 return;
             }
         }

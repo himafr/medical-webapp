@@ -42,7 +42,7 @@ public class servicesApi {
                 .map(ServiceMapper::mapFromMedicalServiceToDto);
 
         ApiResponse res = ApiResponse.builder().status(200)
-                .message("تم تحصيل الخدمات بنجاح ")
+                .message("تم عرض الخدمات بنجاح")
                 .data(data).build();
         return ResponseEntity.ok(res);
     }
@@ -53,7 +53,7 @@ public class servicesApi {
     public ResponseEntity<ApiResponse> getServiceById(Authentication authentication, @PathVariable long id) {
         MedicalServiceEntity service = medicalServiceService.getServiceById(id);
         Map<String, Object> data = Map.of("service", service, "features", service.getFeatures());
-        ApiResponse res = ApiResponse.success("تم جلب بيانات الخدمه مع الرقم التعريفي " + id, data);
+        ApiResponse res = ApiResponse.success("تم عرض بيانات الخدمة بنجاح", data);
         return ResponseEntity.ok(res);
     }
 
@@ -61,7 +61,7 @@ public class servicesApi {
     public ResponseEntity<ApiResponse> createService(@Valid @RequestBody  ServiceDto dto, Principal principal) {
         medicalServiceService.createService(dto, principal.getName());
         ApiResponse res = ApiResponse.builder().status(201)
-                .message("تم انشاء الخدمة بنجاح بواسطة المستخدم " + principal.getName())
+                .message("تم إنشاء الخدمة بنجاح")
                 .data(HttpStatus.CREATED).build();
         return ResponseEntity.status(HttpStatus.CREATED).body(res);
     }
@@ -69,14 +69,14 @@ public class servicesApi {
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse> updateService(@RequestBody ServiceDto dto, Principal principal, @PathVariable long id) {
         medicalServiceService.updateService(id, dto);
-        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success("تم تحديث الخدمه بنجاح ."));
+        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success("تم تحديث الخدمة بنجاح"));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse> deleteService(
             @PathVariable long id) {
         medicalServiceService.deleteService(id);
-        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success("تم حذف الخدمه بنجاح ."));
+        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success("تم حذف الخدمة بنجاح"));
     }
 
 }

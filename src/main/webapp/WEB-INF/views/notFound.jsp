@@ -31,7 +31,7 @@
                     </div>
                     <div class="lc-block mb-3">
                         <div editable="rich">
-                            <h1 class="display-1 fw-bold text-muted">Error 404</h1>
+                            <h1 class="display-1 fw-bold text-muted">الصفحة غير موجودة</h1>
 
                         </div>
                     </div>

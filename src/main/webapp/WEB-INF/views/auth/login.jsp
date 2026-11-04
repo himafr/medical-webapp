@@ -5,7 +5,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>login</title>
+        <title>تسجيل الدخول</title>
         <link rel="stylesheet" href="./css/bootstrap.min.css">
         <link rel="stylesheet" href="./css/login.css">
         <link rel="stylesheet" href="./responsive.css">
@@ -41,13 +41,13 @@
                     <div class="mb-3">
                         <label for="password" class="form-label">كلمة المرور </label>
                         <div class="input-holder">
-                            <input required type="password" name="password" class="form-control" id="password" placeholder="Enter your password">
+                            <input required type="password" name="password" class="form-control" id="password" placeholder="أدخل كلمة المرور">
                             <span onclick="togglePassword()"><img src="./svgs/lock.svg" alt="icon"></span>
                         </div>
                     </div>
 
                     <% if (request.getParameter("error") != null) { %>
-                    <p style="color:red;">اسم المستخدم أو كلمة المرور غلط!</p>
+                    <p style="color:red;">البريد الإلكتروني أو كلمة المرور غير صحيحة</p>
                     <% } %>
 
                     <% if (request.getParameter("logout") != null) { %>
@@ -63,7 +63,7 @@
                 <div class="signup-box">
                     <div class="signup-link">
                         ليس لديك حساب ؟
-                        <a href="/signup">انشاء حساب جيدي</a>
+                        <a href="/signup">إنشاء حساب جديد</a>
                     </div>
                 </div>
             </div>

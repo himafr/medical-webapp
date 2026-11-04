@@ -23,7 +23,7 @@ public class ProjectUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         ProjectUser user = userRepo.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Could not found any user with email : " + username));
+                .orElseThrow(() -> new UsernameNotFoundException("لم يتم العثور على حساب بهذا البريد الإلكتروني"));
         List<GrantedAuthority> authorities = List.of(
             new SimpleGrantedAuthority(user.getRole().toString())
         );

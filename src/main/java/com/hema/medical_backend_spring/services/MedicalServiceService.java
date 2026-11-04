@@ -63,12 +63,12 @@ public class MedicalServiceService {
 }
 
     public MedicalServiceEntity getServiceById(@NonNull Long id) {
-        return medicalServiceRepository.findById(id).orElseThrow(() -> new RuntimeException("الخدمة التي تبحث عنها برقم "+id +"غير متوفره حاليا"));
+        return medicalServiceRepository.findById(id).orElseThrow(() -> new com.hema.medical_backend_spring.exception.UserNotFoundException("الخدمة المطلوبة غير متاحة"));
     }
 
     public void createService(ServiceDto dto, String adminEmail) {
         Admin admin = adminRepository.findByEmail(adminEmail)
-                .orElseThrow(() -> new RuntimeException("ليس لديك صلاحيه لتعديل بيانات الخدمة"));
+                .orElseThrow(() -> new org.springframework.security.access.AccessDeniedException("ليس لديك صلاحية إنشاء الخدمات أو تعديلها"));
 
         MedicalServiceEntity service = new MedicalServiceEntity();
         service.setAdmin(admin);
@@ -109,7 +109,7 @@ public class MedicalServiceService {
 
         if (dto.getFeatures() != null) {
             MedicalServiceEntity service = medicalServiceRepository.findById(id)
-                    .orElseThrow(() -> new RuntimeException("Service not found"));
+                    .orElseThrow(() -> new com.hema.medical_backend_spring.exception.UserNotFoundException("الخدمة المطلوبة غير موجودة"));
 
             service.getFeatures().clear();
 

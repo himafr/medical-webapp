@@ -5,7 +5,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>signup</title>
+        <title>إنشاء حساب طبيب</title>
         <link rel="stylesheet" href="./css/bootstrap.min.css">
         <link rel="stylesheet" href="./css/signup.css">
         <link rel="stylesheet" href="./responsive.css">
@@ -33,7 +33,7 @@
                             والاحترافية العالمية في قلب العيادة.
                         </div>
 
-                        <div class="bottom-text">Premium Medical Care</div>
+                        <div class="bottom-text">رعاية طبية متميزة</div>
                     </div>
                 </div>
 
@@ -87,7 +87,7 @@
                             <div class="mb-3">
                                 <label for="password" class="form-label">كلمة المرور </label>
                                 <div class="input-holder">
-                                    <input required name="password" type="password" class="form-control" id="password" placeholder="Enter your password">
+                                    <input required name="password" type="password" class="form-control" id="password" placeholder="أدخل كلمة المرور">
                                     <span onclick="togglePassword()"><img src="./svgs/lock.svg" alt="icon"></span>
                                 </div>
                             </div>
@@ -95,7 +95,7 @@
                             <div class="mb-3">
                                 <label for="password-check" class="form-label">تاكيد كلمة المرور </label>
                                 <div class="input-holder">
-                                    <input required name="passwordCheck" type="password" class="form-control" id="password-check" placeholder="Enter your password">
+                                    <input required name="passwordCheck" type="password" class="form-control" id="password-check" placeholder="أعد إدخال كلمة المرور">
                                     <span onclick="togglePassword()"><img src="./svgs/lock-load.svg" alt="icon"></span>
                                 </div>
                             </div>

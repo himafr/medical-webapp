@@ -33,24 +33,24 @@ public class AppointmentApi {
             @RequestParam(defaultValue = "10") int size) {
         Page<Appointment> appointmentsPage = appointmentService.getAppointmentsForPatient(principal.getName(), page,
                 size);
-       return ResponseEntity.ok(ApiResponse.success("",appointmentsPage));
+    return ResponseEntity.ok(ApiResponse.success("تم جلب المواعيد بنجاح",appointmentsPage));
     }
 
     @GetMapping("/booked-dates")
     public ResponseEntity<ApiResponse> getBookedDates(@RequestParam Long doctorId) {
-        return ResponseEntity.ok(ApiResponse.success("booked dates",appointmentService.getFullyBookedDates(doctorId)));
+        return ResponseEntity.ok(ApiResponse.success("تواريخ اكتمال حجوزات الطبيب",appointmentService.getFullyBookedDates(doctorId)));
     }
     @GetMapping("/available-slots")
     
     public ResponseEntity<ApiResponse> getAvailableSlots(@RequestParam Long doctorId,
                                            @RequestParam String date) {
-        return ResponseEntity.ok(ApiResponse.success("available slots",appointmentService.getBookedSlots(doctorId, LocalDate.parse(date))));
+        return ResponseEntity.ok(ApiResponse.success("الأوقات المحجوزة للطبيب في هذا التاريخ",appointmentService.getBookedSlots(doctorId, LocalDate.parse(date))));
     }
 
     @PostMapping("")
     public ResponseEntity<ApiResponse> bookAppointment(@Valid @RequestBody  AppointmentDto dto, Principal principal) {
         appointmentService.createAppointment(dto, principal.getName());
-        return ResponseEntity.ok(ApiResponse.success("Appointment booked successfully"));
+        return ResponseEntity.ok(ApiResponse.success("تم حجز الموعد بنجاح"));
     }
 
     // المريض يحجز
