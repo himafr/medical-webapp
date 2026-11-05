@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.hema.medical_backend_spring.dto.DoctorApiDto;
 import com.hema.medical_backend_spring.dto.DoctorResponseDto;
 import com.hema.medical_backend_spring.dto.UpdateDoctorDto;
+import com.hema.medical_backend_spring.mapper.DoctorMapper;
 import com.hema.medical_backend_spring.mapper.HelperDto;
 import com.hema.medical_backend_spring.model.Doctor;
 import com.hema.medical_backend_spring.model.ProjectUser;
@@ -57,35 +58,15 @@ public class DoctorService {
                 })
                 .collect(Collectors.toList());
     }
-// for refrences by now
-    // public Page<Doctor> getDoctorsBySpecialty(String specialty, int page, int size) {
-    //     Pageable pageable = PageRequest.of(page, size);
 
-    //     if (specialty != null) {
-    //         switch (specialty.toUpperCase()) {
-    //             case "GENERAL":
-    //                 return doctorRepository.findBySpecialty(Specialty.GENERAL, pageable);
-    //             case "DENTISTRY":
-    //                 return doctorRepository.findBySpecialty(Specialty.DENTISTRY, pageable);
-    //             case "DERMATOLOGY":
-    //                 return doctorRepository.findBySpecialty(Specialty.DERMATOLOGY, pageable);
-    //             case "OPHTHALMOLOGY":
-    //                 return doctorRepository.findBySpecialty(Specialty.OPHTHALMOLOGY, pageable);
-    //             case "CARDIOLOGY":
-    //                 return doctorRepository.findBySpecialty(Specialty.CARDIOLOGY, pageable);
-    //             case "COSMETIC_DERMATOLOGY":
-    //                 return doctorRepository.findBySpecialty(Specialty.COSMETIC_DERMATOLOGY, pageable);
-    //             case "FAMILY_MEDICINE":
-    //                 return doctorRepository.findBySpecialty(Specialty.FAMILY_MEDICINE, pageable);
-    //             case "PEDIATRICS":
-    //                 return doctorRepository.findBySpecialty(Specialty.PEDIATRICS, pageable);
-    //             default:
-    //                 return doctorRepository.findAll(pageable);
-    //         }
-    //     }
-    //     return doctorRepository.findAll(pageable);
-    // }
+    public DoctorResponseDto getDoctor(String username){
+        
+        Doctor doctor= doctorRepository.findByEmail(username);
+        if(doctor ==null ||doctor.getRole().toString() !="DOCTOR") throw new AccessDeniedException("لا يمكن للمريض عرض بيانات الدكتور ");
+        return DoctorMapper.DoctorToDto(doctor);
 
+
+    }
  public Page<Doctor> getDoctorsBySpecialtyAsDto(String specialty, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         Specialty specEnum = parseSpecialty(specialty); 

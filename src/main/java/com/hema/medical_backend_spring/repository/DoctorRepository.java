@@ -8,13 +8,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.hema.medical_backend_spring.dto.DoctorResponseDto;
 import com.hema.medical_backend_spring.model.Doctor;
 import com.hema.medical_backend_spring.model.Doctor.Specialty;
 
 public interface DoctorRepository extends JpaRepository<Doctor, Long> {
 
-    Page<Doctor> findBySpecialty(Specialty specialty, Pageable pageable);
+        Doctor findByEmail(String email);
 
+    Page<Doctor> findBySpecialty(Specialty specialty, Pageable pageable);
     
     Page<Doctor> findByFullNameContainingIgnoreCaseOrAboutContainingIgnoreCaseOrSpecializationContainingIgnoreCaseOrWorkContainingIgnoreCase(
             String fullName, String about, String specialization, String work, Pageable pageable);

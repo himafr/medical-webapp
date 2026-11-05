@@ -1,5 +1,6 @@
 package com.hema.medical_backend_spring.api;
 
+import java.security.Principal;
 import java.util.Map;
 
 import org.springframework.data.domain.Page;
@@ -16,6 +17,7 @@ import com.hema.medical_backend_spring.dto.ApiResponse;
 import com.hema.medical_backend_spring.dto.DoctorResponseDto;
 import com.hema.medical_backend_spring.dto.UpdateDoctorDto;
 import com.hema.medical_backend_spring.mapper.DoctorMapper;
+import com.hema.medical_backend_spring.model.Doctor;
 import com.hema.medical_backend_spring.services.DoctorService;
 
 import lombok.AllArgsConstructor;
@@ -42,6 +44,16 @@ public class DoctorApi {
                 return ResponseEntity.ok(res);
         }
 
+        @GetMapping("/me")
+        public ResponseEntity<ApiResponse> getDoctor(
+                        Principal principal) {
+               DoctorResponseDto doctor= doctorService.getDoctor(principal.getName());
+                ApiResponse res = ApiResponse.builder().status(200).message("تم عرض الطبيب بنجاح").data(doctor)
+                                .build();
+
+                return ResponseEntity.ok(res);
+        }
+
         @GetMapping("/search")
         public ResponseEntity<ApiResponse> searchDoctors(
                         @RequestParam(required = false) String s,
@@ -52,11 +64,12 @@ public class DoctorApi {
                                 .map(DoctorMapper::DoctorToDto);
 
                 return ResponseEntity.ok()
-                                .body(ApiResponse.builder().status(200).message("تم عرض نتائج البحث بنجاح").data(doctorsPage).build());
+                                .body(ApiResponse.builder().status(200).message("تم عرض نتائج البحث بنجاح")
+                                                .data(doctorsPage).build());
         }
 
         @PutMapping("")
-        public ResponseEntity<Map<String, String>> updateCareerDetails(@RequestBody  UpdateDoctorDto dto,
+        public ResponseEntity<Map<String, String>> updateCareerDetails(@RequestBody UpdateDoctorDto dto,
                         Authentication authentication) {
                 doctorService.updateDoctor(dto, authentication);
                 return ResponseEntity.ok().body(Map.of("message", "تم تعديل البيانات بنجاح"));

@@ -23,6 +23,7 @@ public class DoctorMapper {
                 .specialization(doctor.getSpecialization())
                 .about(doctor.getAbout())
                 .work(doctor.getWork())
+                .certifications(doctor.getCertifications())
                 .build();
     }
 }
