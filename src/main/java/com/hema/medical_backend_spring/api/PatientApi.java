@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hema.medical_backend_spring.dto.ApiResponse;
-import com.hema.medical_backend_spring.dto.PatientResponseDto;
 import com.hema.medical_backend_spring.dto.UpdateBloodTypeDto;
 import com.hema.medical_backend_spring.dto.UpdatePatientEmergencyDto;
 import com.hema.medical_backend_spring.mapper.HelperDto;

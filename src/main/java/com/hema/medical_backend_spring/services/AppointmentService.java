@@ -1,5 +1,6 @@
 package com.hema.medical_backend_spring.services;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -83,6 +84,8 @@ public class AppointmentService {
         }
 
         public List<String> getBookedSlots(Long doctorId, LocalDate date) {
+                if (date.getDayOfWeek() == DayOfWeek.FRIDAY)throw new IllegalArgumentException("لا يمكن الحجز يوم الجمعة، يرجى اختيار يوم آخر.");
+
                 return appointmentRepository.findByDoctorIdAndAppointmentDate(doctorId, date)
                                 .stream()
                                 .map(a -> a.getAppointmentTime().toString())
