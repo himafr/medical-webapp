@@ -18,7 +18,7 @@
         <div class="container">
             <%@ include file="shared/header.jsp" %>
 
-            <section>
+            <section class="doctors-page-intro">
                 <h1 class="text-primary">
                     نخبة
                     <span>الأطباء والمتخصصين</span>
@@ -81,7 +81,7 @@
             </section>
 
 
-            <section >
+            <section class="doctors-list">
                 <div class="row justify-content-between">
                     <% List<Doctor> doctors =(List<Doctor>) request.getAttribute("doctors"); %>
                     <% for(Doctor doctor:doctors){%>
@@ -133,7 +133,7 @@
             <%@ include file="shared/pagination.jsp" %>
 
                 <section>
-                    <div class="green-card row align-items-center justify-content-around " style="margin-top: 64px; padding: 32px;">
+                    <div class="green-card row align-items-center justify-content-around doctors-cta" style="margin-top: 64px; padding: 32px;">
                         <div  class="col-9 " >
                             <h2 class="mb-md-5" style="text-align: justify;">
                                 هل تنتمي إلى

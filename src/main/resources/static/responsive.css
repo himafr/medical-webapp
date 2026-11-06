@@ -333,6 +333,8 @@
     grid-template-columns: 1fr;
   }
   .content {
+    width: 100%;
+    min-width: 0;
     justify-content: center;
   }
   .sidebar {
@@ -407,6 +409,20 @@
     min-width: 0;
     width: calc(100% - 240px);
   }
+
+  .section-one {
+    padding: 64px 32px;
+  }
+
+  .section-one .container {
+    padding: 64px 32px;
+  }
+
+  .overlay-card {
+    width: min(100%, 456px);
+    min-height: 0;
+    padding: 32px;
+  }
 }
 
 @media only screen and (max-width: 600px) {
@@ -472,6 +488,64 @@
 
   .footer-tail {
     align-items: center;
+  }
+
+  .section-one {
+    padding: 48px 12px;
+  }
+
+  .section-one .container {
+    gap: 20px;
+    padding: 24px 12px;
+  }
+
+  .section-one > div > div h1,
+  .section-one h1 {
+    font-size: clamp(30px, 9vw, 44px);
+    line-height: 1.25;
+  }
+
+  .section-one > div > div p,
+  .section-one p {
+    font-size: 16px;
+    line-height: 1.8;
+  }
+
+  .overlay-card {
+    width: 100%;
+    min-height: 0;
+    padding: 24px;
+    gap: 20px;
+  }
+
+  .overlay-card h5 {
+    font-size: 24px;
+    line-height: 1.4;
+  }
+
+  .overlay-card .text-secondary {
+    line-height: 1.8;
+  }
+
+  .card-doctor {
+    max-width: 100%;
+    padding: 14px;
+  }
+
+  .card-doctor .btn-gold {
+    max-width: 100%;
+    min-height: 48px;
+    height: auto;
+  }
+
+  .profile-header {
+    gap: 20px;
+    padding: 16px;
+  }
+
+  .content .avatar {
+    width: 96px;
+    height: 96px;
   }
 
   table {

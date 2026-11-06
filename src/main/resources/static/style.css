@@ -574,6 +574,158 @@ footer a:hover {
   }
 }
 
+body {
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: pretty;
+}
+
+p {
+  line-height: 1.8;
+}
+
+header {
+  padding-inline: clamp(12px, 2vw, 28px);
+}
+
+.header-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-btn .btn {
+  min-height: 42px;
+  white-space: nowrap;
+}
+
+.sidebar {
+  border-color: rgba(26, 60, 52, 0.1);
+  background: linear-gradient(180deg, #fff, #f8faf9);
+  box-shadow: 0 12px 30px rgba(13, 43, 26, 0.06);
+}
+
+.sidebar-item {
+  min-height: 44px;
+  align-items: center;
+  color: #43564e;
+  transition: background-color 180ms var(--motion-ease), color 180ms var(--motion-ease),
+    transform 180ms var(--motion-ease);
+}
+
+.sidebar-item:hover,
+.sidebar-item.active {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+.content > .card,
+.home-features .card,
+.card-doctor,
+.white-card,
+.gray-card {
+  border: 1px solid rgba(26, 60, 52, 0.1);
+  border-radius: 18px;
+  background-color: #fff;
+  box-shadow: 0 10px 30px rgba(13, 43, 26, 0.055);
+}
+
+.card-title {
+  color: var(--primary-color);
+}
+
+.profile-top,
+.doctor-details {
+  background: linear-gradient(120deg, #1a3c34 0%, #274f42 100%);
+}
+
+.info-grid {
+  gap: 14px 24px;
+}
+
+.info-item,
+.medical-row {
+  padding: 12px 14px;
+  border: 1px solid rgba(26, 60, 52, 0.07);
+  border-radius: 12px;
+  background: #f8faf9;
+}
+
+table {
+  overflow: hidden;
+  border: 1px solid rgba(26, 60, 52, 0.1);
+  border-radius: 12px;
+  background: #fff;
+}
+
+th {
+  background: #f2f6f3;
+}
+
+tbody tr {
+  transition: background-color 180ms var(--motion-ease);
+}
+
+tbody tr:hover {
+  background-color: #f8faf9;
+}
+
+.form-control,
+input.form-control,
+select.form-control,
+textarea.form-control {
+  border-color: #dce5e0;
+  border-radius: 10px;
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-gold,
+.btn-green,
+.btn-signup,
+.btn-login,
+.dashboard-link,
+.edit-btn {
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.5;
+  text-align: center;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.btn-primary:disabled,
+.btn-primary[disabled] {
+  color: #fff !important;
+}
+
+.btn-primary:disabled img,
+.btn-primary[disabled] img {
+  opacity: 0.9;
+}
+
+footer {
+  background:
+    radial-gradient(ellipse at 10% 0, rgba(197, 160, 89, 0.12), transparent 34%),
+    var(--primary-color);
+  padding-inline: clamp(24px, 8vw, 120px);
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1200px;
+  }
+}
 a.active {
   color: var(--primary-text) !important;
 }
