@@ -4,6 +4,7 @@
     font-size: 14px;
     padding: 0px;
   }
+
   .container {
     width: 100%;
   }
@@ -65,12 +66,13 @@
   .btn-primary {
     padding: 6px 8px;
     border-radius: 14px;
-    font-size: 12px !important;
+    font-size: 13px !important;
+    line-height: 1.45;
   }
 
   .btn-primary:hover {
     background-color: var(--primary-color-hover);
-    color: white;
+    color: var(--primary-text) !important;
     padding-inline: 8px;
     border-radius: 8px;
   }
@@ -370,5 +372,112 @@
   }
   .footer-tail {
     padding-top: 12px;
+  }
+}
+
+@media only screen and (min-width: 601px) and (max-width: 992px) {
+  footer {
+    padding: 56px 40px 32px;
+  }
+
+  footer .footer-box {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 32px;
+  }
+
+  header nav ul {
+    gap: 16px;
+  }
+
+  header > div:first-child {
+    gap: 8px;
+    font-size: 17px;
+  }
+
+  section {
+    padding: 48px 20px;
+  }
+
+  .sidebar {
+    width: 240px;
+    flex-shrink: 0;
+  }
+
+  .content {
+    min-width: 0;
+    width: calc(100% - 240px);
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  html {
+    scroll-padding-top: 72px;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 1040;
+    padding-inline: 8px;
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(12px);
+  }
+
+  .mobile-menu {
+    position: fixed;
+    top: 72px;
+    max-height: calc(100dvh - 88px);
+    overflow-y: auto;
+  }
+
+  .login-main {
+    min-height: 100svh;
+    height: auto;
+    padding: 20px 12px 32px;
+  }
+
+  .login-main > .card {
+    width: min(100%, 448px);
+    min-width: 0;
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .login-main .left-side {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .login-main form {
+    max-width: 100%;
+  }
+
+  .login-main + footer {
+    position: static;
+    width: 100%;
+    padding: 12px;
+    text-align: center;
+    background: transparent;
+  }
+
+  .footer-tail,
+  .footer-tail > div {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .footer-tail {
+    align-items: center;
+  }
+
+  table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 }
