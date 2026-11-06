@@ -77,6 +77,119 @@ textarea:focus {
   border-color: var(--primary-text) !important;
   box-shadow: 0 0 0 4px #c5a05926 !important;
 }
+
+.form-control,
+.form-select,
+input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="submit"]):not([type="button"]),
+select,
+textarea {
+  min-height: 48px;
+  padding: 10px 14px;
+  border: 1px solid #d9e3de;
+  border-radius: 11px;
+  background-color: #fff;
+  color: #23352f;
+  font-size: 15px;
+  line-height: 1.6;
+  box-shadow: 0 1px 2px rgba(13, 43, 26, 0.025);
+  transition: border-color 180ms var(--motion-ease), box-shadow 180ms var(--motion-ease),
+    background-color 180ms var(--motion-ease);
+}
+
+.form-control::placeholder,
+input::placeholder,
+textarea::placeholder {
+  color: #87958f;
+  opacity: 1;
+}
+
+.form-control:focus,
+.form-select:focus,
+input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):focus,
+select:focus,
+textarea:focus {
+  border-color: #8b9f94 !important;
+  background-color: #fff;
+  box-shadow: 0 0 0 4px rgba(26, 60, 52, 0.09) !important;
+  outline: none;
+}
+
+.form-control:disabled,
+.form-select:disabled,
+input:disabled,
+select:disabled,
+textarea:disabled {
+  border-color: #e2e8e4;
+  background-color: #f1f4f2;
+  color: #77847d;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+textarea.form-control,
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+input[type="date"],
+input[type="time"],
+input[type="datetime-local"],
+input[type="number"] {
+  font-variant-numeric: tabular-nums;
+}
+
+input[type="checkbox"].form-check-input,
+input[type="radio"].form-check-input {
+  width: 18px;
+  height: 18px;
+  min-height: 18px;
+  padding: 0;
+  border: 1px solid #b9c8bf;
+  box-shadow: none;
+  accent-color: var(--primary-color);
+  cursor: pointer;
+}
+
+input[type="checkbox"].form-check-input:checked,
+input[type="radio"].form-check-input:checked {
+  border-color: var(--primary-color);
+  background-color: var(--primary-color);
+}
+
+input[type="checkbox"].form-check-input:focus,
+input[type="radio"].form-check-input:focus {
+  box-shadow: 0 0 0 4px rgba(26, 60, 52, 0.12) !important;
+}
+
+input[type="file"].form-control {
+  height: auto;
+  min-height: 48px;
+  padding: 7px;
+  overflow: hidden;
+}
+
+input[type="file"]::file-selector-button {
+  min-height: 32px;
+  margin-inline-end: 10px;
+  padding: 5px 12px;
+  border: 0;
+  border-radius: 7px;
+  background: #edf2ef;
+  color: var(--primary-color);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.form-label,
+form label:not(.form-check-label):not(.time-slot):not(.toggle) {
+  color: #43574d;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+}
 a ,a:hover{
   text-decoration: none;
   color: var(--primary-color);

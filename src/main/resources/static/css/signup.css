@@ -260,6 +260,79 @@ footer {
   bottom: 0;
 }
 
+.left-side .form-control {
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 14px;
+  border: 1px solid #d9e3de;
+  border-radius: 10px;
+  background-color: #fbfcfb;
+  color: #23352f;
+  font-size: 14px;
+  box-shadow: 0 2px 6px rgba(13, 43, 26, 0.03);
+  transition: border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+}
+
+.left-side .input-holder .form-control {
+  padding-inline-end: 44px;
+}
+
+.left-side .form-control:focus {
+  border-color: #7d9789;
+  background-color: #fff;
+  box-shadow: 0 0 0 4px rgba(26, 60, 52, 0.1);
+}
+
+.left-side .form-control::placeholder {
+  color: #89968f;
+  opacity: 1;
+}
+
+.left-side .form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: #43574d;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.left-side .input-holder span {
+  top: 50%;
+  right: 9px;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  margin-top: 0;
+  transform: translateY(-50%);
+}
+
+.left-side .input-holder span img {
+  width: 17px;
+  height: 17px;
+  object-fit: contain;
+  opacity: 0.76;
+}
+
+.left-side .input-holder span:hover img {
+  opacity: 1;
+}
+
+.left-side .form-check-input {
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  border-color: #b9c8bf;
+  accent-color: var(--primary-color);
+  cursor: pointer;
+}
+
+.left-side select.form-control {
+  cursor: pointer;
+}
+
 .input-holder input,
 .input-holder select {
   min-height: 46px;
