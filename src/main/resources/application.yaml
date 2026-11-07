@@ -1,7 +1,12 @@
 spring:
-    
     application:
         name: medical_backend_spring
+
+    
+    servlet:
+        multipart:
+            max-file-size: 5MB
+            max-request-size: 5MB
 
 # database credentials
     datasource:
@@ -51,4 +56,8 @@ jwt:
 
 
 
-    
+aws:
+  region: ${AWS_REGION:us-east-1}
+  s3:
+    bucket: ${YOUR_BUCKET_NAME}
+    folder: medical/images

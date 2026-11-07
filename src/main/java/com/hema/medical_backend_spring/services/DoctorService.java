@@ -35,13 +35,17 @@ public class DoctorService {
     
 
     public void updateDoctor(UpdateDoctorDto dto, Authentication authentication) {
+        updateDoctor(dto, authentication, null);
+    }
+
+    public void updateDoctor(UpdateDoctorDto dto, Authentication authentication, String photo) {
         if (authentication.getAuthorities().toArray()[0].toString().equals("DOCTOR")) {
     
     doctorRepository.updateDoctorPartial(
         HelperDto.getProjectUser(authentication).getId(),
         dto.getSpecialization(),
         dto.getWork(), dto.getAbout(),
-        dto.getSpecialty());
+        dto.getSpecialty(), photo);
     }else{
         throw new AccessDeniedException("لا يمكن للمريض تغير بيانات الدكتور ");
     }

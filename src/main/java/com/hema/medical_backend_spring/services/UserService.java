@@ -54,6 +54,7 @@ public class UserService {
         patient.setGender(user.getGender());
         patient.setPassword(passwordEncoder.encode(user.getPassword()));
         patient.setPhoneNumber(user.getPhoneNumber());
+        patient.setPhoto(user.getPhoto());
         patient.setRole(ProjectUser.Role.PATIENT);
 
         Patient savedPatient = patientRepository.save(patient);
@@ -73,12 +74,17 @@ public class UserService {
         doctor.setGender(user.getGender());
         doctor.setPassword(passwordEncoder.encode(user.getPassword()));
         doctor.setPhoneNumber(user.getPhoneNumber());
+        doctor.setPhoto(user.getPhoto());
         doctor.setRole(ProjectUser.Role.DOCTOR);
         doctorRepository.save(doctor);
 
     }
 
     public void updateUser(UserPersonalDetailsDto dto, String email) {
+        updateUser(dto, email, null);
+    }
+
+    public void updateUser(UserPersonalDetailsDto dto, String email, String photo) {
         String name = (dto.getFullName() == null || dto.getFullName().isBlank()) ? null : dto.getFullName();
         String address = (dto.getAddress() == null || dto.getAddress().isBlank()) ? null : dto.getAddress();
         String gender = (dto.getGender() == null || dto.getGender().isBlank()) ? null : dto.getGender();
@@ -87,7 +93,8 @@ public class UserService {
             throw new IllegalArgumentException("يجب أن يكون العمر 12 عامًا على الأقل");
         }
 
-        int updatedRows = userRepo.updateUserInfo(email, name, dto.getDateOfBirth(), address, gender, phone);
+        int updatedRows = userRepo.updateUserInfo(email, name, dto.getDateOfBirth(), address, gender, phone,
+                photo);
 
         if (updatedRows == 0) {
             throw new com.hema.medical_backend_spring.exception.UserNotFoundException("لم يتم العثور على المستخدم");

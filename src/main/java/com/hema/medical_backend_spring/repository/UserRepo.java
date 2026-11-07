@@ -22,7 +22,8 @@ public interface UserRepo extends JpaRepository<ProjectUser, Long> {
             "p.dateOfBirth = COALESCE(:birth, p.dateOfBirth), " +
             "p.address = COALESCE(:address, p.address), " +
             "p.gender = COALESCE(:gender, p.gender), " +
-            "p.phoneNumber = COALESCE(:phone, p.phoneNumber) " +
+            "p.phoneNumber = COALESCE(:phone, p.phoneNumber), " +
+            "p.photo = COALESCE(:photo, p.photo) " +
             "WHERE p.email = :email")
     int updateUserInfo(
             @Param("email") String email,
@@ -30,6 +31,7 @@ public interface UserRepo extends JpaRepository<ProjectUser, Long> {
             @Param("birth") LocalDate dateOfBirth,
             @Param("address") String address,
             @Param("gender") String gender,
-            @Param("phone") String phoneNumber);
+            @Param("phone") String phoneNumber,
+            @Param("photo") String photo);
 
 }

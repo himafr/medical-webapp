@@ -15,6 +15,7 @@ public class UserMapper {
                 .fullName(user.getFullName())
                 .gender(user.getGender())
                 .phoneNumber(user.getPhoneNumber())
+                .photo(user.getPhoto())
                 .build();
     }
 

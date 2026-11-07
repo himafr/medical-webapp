@@ -13,4 +13,5 @@ public class UserPersonalDetailsDto {
     private LocalDate dateOfBirth;
     private String gender;
     private String address;
+    private String photo;
 }
