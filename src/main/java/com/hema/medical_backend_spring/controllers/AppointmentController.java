@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hema.medical_backend_spring.dto.AppointmentDto;
 import com.hema.medical_backend_spring.model.Appointment;
@@ -47,8 +48,10 @@ public class AppointmentController {
     }
 
     @PostMapping("/book-appointment")
-    public String bookAppointment(@ModelAttribute AppointmentDto dto, Principal principal) {
+    public String bookAppointment(@ModelAttribute AppointmentDto dto, Principal principal,
+            RedirectAttributes redirectAttributes) {
         appointmentService.createAppointment(dto, principal.getName());
+        redirectAttributes.addFlashAttribute("successMessage", "تم إرسال طلب الحجز بنجاح. سنتواصل معك لتأكيد الموعد.");
         return "redirect:/home#appointments";
     }
 

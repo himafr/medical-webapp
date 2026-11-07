@@ -91,6 +91,7 @@
                 }
             });
         </script>
+        <%@ include file="toast.jsp" %>
         <script src="/js/gsap.min.js" defer></script>
         <script src="/js/ScrollTrigger.min.js" defer></script>
         <script src="/js/scroll-reveal.js" defer></script>

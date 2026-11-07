@@ -89,7 +89,8 @@
         <!-- Congratulations area end -->
 
         <!-- Latest compiled JavaScript -->
-        <script src="./js/bootstrap.min.js"></script>
+        <%@ include file="../shared/toast.jsp" %>
+        <script src="/js/bootstrap.min.js"></script>
 
     </body>
 </html>

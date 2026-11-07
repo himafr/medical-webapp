@@ -1,3 +1,6 @@
+@import url("/css/toastify.min.css");
+@import url("/css/toast.css");
+
 :root {
   --primary-color: #1a3c34;
   --primary-color-hover: #344f46;

@@ -78,7 +78,7 @@
                             <img src="/svgs/check-mark.svg" width="80">
                         </div>
                         <h4 class="congratulation-contents-title">تمت العملية بنجاح</h4>
-                        <p class="congratulation-contents-para " style="color:green"> ${successMessage} </p>
+                        <p class="congratulation-contents-para " style="color:green"> ${not empty successMessage ? successMessage : message} </p>
                         <div class="btn-wrapper mt-4">
                             <a href="/home" class="btn-primary btn-bg-1">العودة إلى الرئيسية</a>
                         </div>
@@ -89,7 +89,8 @@
         <!-- Congratulations area end -->
 
         <!-- Latest compiled JavaScript -->
-        <script src="./js/bootstrap.min.js"></script>
+        <%@ include file="../shared/toast.jsp" %>
+        <script src="/js/bootstrap.min.js"></script>
 
     </body>
 </html>

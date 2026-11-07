@@ -7,6 +7,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>تسجيل الدخول</title>
         <link rel="stylesheet" href="./css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/toastify.min.css">
+        <link rel="stylesheet" href="/css/toast.css">
         <link rel="stylesheet" href="./css/login.css">
         <link rel="stylesheet" href="./responsive.css">
     </head>
@@ -47,11 +49,11 @@
                     </div>
 
                     <% if (request.getParameter("error") != null) { %>
-                    <p style="color:red;">البريد الإلكتروني أو كلمة المرور غير صحيحة</p>
+                    <p data-toast-message data-toast-type="error" style="color:red;">البريد الإلكتروني أو كلمة المرور غير صحيحة</p>
                     <% } %>
 
                     <% if (request.getParameter("logout") != null) { %>
-                    <p style="color:green;">تم تسجيل الخروج بنجاح!</p>
+                    <p data-toast-message data-toast-type="success" style="color:green;">تم تسجيل الخروج بنجاح!</p>
                     <% } %>
 
 
@@ -69,6 +71,7 @@
             </div>
         </main>
         <footer>&copy;  <%= java.time.Year.now().getValue() %> العيادة الملكية - جميع الحقوق محفوظة</footer>
+        <%@ include file="../shared/toast.jsp" %>
         <script src="./js/bootstrap.min.js"></script>
         <script >
             function togglePassword() {

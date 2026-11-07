@@ -25,8 +25,10 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/update-personal-details")
-    public String updatePatient(@ModelAttribute UserPersonalDetailsDto dto, Principal principal) {
+    public String updatePatient(@ModelAttribute UserPersonalDetailsDto dto, Principal principal,
+            RedirectAttributes redirectAttributes) {
         userService.updateUser(dto, principal.getName());
+        redirectAttributes.addFlashAttribute("successMessage", "تم تحديث بياناتك الشخصية بنجاح.");
         return "redirect:/home";
     }
  @PostMapping("/update-password")
@@ -37,13 +39,15 @@ public String updatePassword(@ModelAttribute UpdatePasswordDto dto, Principal pr
 }
 
 @PostMapping("/delete-account")
-public String postMethodName(Authentication authentication ,HttpServletResponse response) {
+public String postMethodName(Authentication authentication ,HttpServletResponse response,
+        RedirectAttributes redirectAttributes) {
   userService.deleteAccount(authentication);
    Cookie jwtCookie = new Cookie("jwt", null);
     jwtCookie.setPath("/");
     jwtCookie.setHttpOnly(true);
     jwtCookie.setMaxAge(0); 
     response.addCookie(jwtCookie);
+    redirectAttributes.addFlashAttribute("successMessage", "تم حذف الحساب بنجاح.");
     return "redirect:/login";
 }
 

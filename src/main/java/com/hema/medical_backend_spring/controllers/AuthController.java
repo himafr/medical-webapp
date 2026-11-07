@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hema.medical_backend_spring.config.CustomUserDetails;
 import com.hema.medical_backend_spring.model.ProjectUser;
@@ -38,7 +39,8 @@ public class AuthController {
     @PostMapping("/perform_login")
     public String login(@RequestParam String username,
             @RequestParam String password,
-            HttpServletResponse response) {
+            HttpServletResponse response,
+            RedirectAttributes redirectAttributes) {
 
         CustomUserDetails userDetails = (CustomUserDetails) userDetailsService.loadUserByUsername(username);
 
@@ -52,6 +54,7 @@ public class AuthController {
 
         // TODO return to the page thr user was in
 
+        redirectAttributes.addFlashAttribute("successMessage", "تم تسجيل الدخول بنجاح.");
         String role = userDetails.getProjectUser().getRole().toString();
         switch (role) {
             case "PATIENT":
@@ -86,7 +89,7 @@ public class AuthController {
     public String registerUser(
             @ModelAttribute ProjectUser user,
             @RequestParam(name = "passwordCheck", required = false) String passwordCheck,
-            Model model) {
+            Model model, RedirectAttributes redirectAttributes) {
 
         // chek fields
         if (user.getEmail() == null || user.getPassword() == "" || user.getFullName() == "") {
@@ -113,6 +116,7 @@ public class AuthController {
 
         System.out.println(user.toString());
         userService.registerPatient(user);
+        redirectAttributes.addFlashAttribute("successMessage", "تم إنشاء الحساب بنجاح. يمكنك تسجيل الدخول الآن.");
         return "redirect:/login";
     }
 
@@ -120,7 +124,7 @@ public class AuthController {
     public String registerDoctor(
             @ModelAttribute ProjectUser user,
             @RequestParam(name = "passwordCheck", required = false) String passwordCheck,
-            Model model, Authentication authentication) {
+            Model model, Authentication authentication, RedirectAttributes redirectAttributes) {
         if (!authentication.getAuthorities().toArray()[0].toString().equals("ADMIN")) {
             model.addAttribute("error", "ليس لديك صلاحية للوصول إلى هذه الصفحة");
             return "auth/doctor-signup";
@@ -149,6 +153,7 @@ public class AuthController {
             return "auth/doctor-signup";
         }
         userService.registerDoctor(user);
+        redirectAttributes.addFlashAttribute("successMessage", "تم إنشاء حساب الطبيب بنجاح.");
         return "redirect:/login";
     }
 

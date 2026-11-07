@@ -56,8 +56,8 @@
             <%= exception.printStackTrace() %>
                 
 
+            <%@ include file="shared/toast.jsp" %>
             <script src="/js/bootstrap.min.js"></script>
         </body>
     </html>
-
 

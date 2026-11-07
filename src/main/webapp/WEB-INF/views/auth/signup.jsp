@@ -7,6 +7,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>إنشاء حساب</title>
         <link rel="stylesheet" href="./css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/toastify.min.css">
+        <link rel="stylesheet" href="/css/toast.css">
         <link rel="stylesheet" href="./css/signup.css">
         <link rel="stylesheet" href="./responsive.css">
     </head>
@@ -42,7 +44,7 @@
                     <div class="header-text">إنشاء حساب جديد</div>
                     <div class="hero-sub-header">انضم إلى نخبة مرضانا واستمتع بخدماتنا المتميزة</div>
                     <% if (request.getAttribute("error") != null) { %>
-                    <div class="alert alert-danger" role="alert" style="margin-bottom: 1rem;">
+                    <div class="alert alert-danger" data-toast-source data-toast-type="error" role="alert" style="margin-bottom: 1rem;">
                         <%= request.getAttribute("error") %>
                     </div>
                     <% } %>
@@ -133,6 +135,8 @@
             </div><%-- end card --%>
         </main>
         <footer>&copy;  <%= java.time.Year.now().getValue() %> العيادة الملكية - جميع الحقوق محفوظة</footer>
+        <script src="/js/toastify.min.js" defer></script>
+        <script src="/js/app-toast.js" defer></script>
         <script src="./js/bootstrap.min.js"></script>
         <script >
             function togglePassword() {

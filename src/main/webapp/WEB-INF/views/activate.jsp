@@ -22,7 +22,7 @@
                         </p>
 
                         <% if (request.getAttribute("error") != null) { %>
-                        <div class="alert alert-danger">
+                        <div class="alert alert-danger" data-toast-source data-toast-type="error" role="alert">
                             <%= request.getAttribute("error") %>
                         </div>
                         <% } %>
@@ -59,6 +59,7 @@
             </div>
         </div>
 
+        <%@ include file="shared/toast.jsp" %>
         <script>
             document.addEventListener("DOMContentLoaded", function() {
                 const lastSent = localStorage.getItem("pinSentAt");

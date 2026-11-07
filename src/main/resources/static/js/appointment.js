@@ -6,6 +6,15 @@ const preDoctorId = urlParams.get("doctorId");
 const preServiceId = urlParams.get("serviceId");
 const preSpecialization = urlParams.get("specialization");
 
+function readApiResponse(response) {
+  return response.json().then((payload) => {
+    if (!response.ok) {
+      throw new Error(payload.message || "تعذر إكمال الطلب");
+    }
+    return payload;
+  });
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   if (preSpecialization) {
     const specSelect = document.getElementById("specialization");
@@ -34,7 +43,7 @@ function handleSpecializationChange() {
   serviceSelect.disabled = true;
 
   fetch("/api/doctors?specialization=" + specialization)
-    .then((r) => r.json())
+    .then(readApiResponse)
     .then((r) => r.data.content)
     .then((doctors) => {
       doctorSelect.innerHTML = "<option>اختر الطبيب المفضل</option>";
@@ -62,6 +71,7 @@ function handleSpecializationChange() {
     .catch(() => {
       doctorSelect.innerHTML = "<option>حدث خطأ، حاول مرة أخرى</option>";
       serviceSelect.innerHTML = "<option>حدث خطأ، حاول مرة أخرى</option>";
+      window.showErrorToast?.("تعذر تحميل بيانات الأطباء والخدمات. حاول مرة أخرى.");
     })
     .finally(() => {
       doctorSelect.disabled = false;
@@ -70,7 +80,7 @@ function handleSpecializationChange() {
 
 function fetchServices(specialization) {
   fetch("/api/services?specialization=" + specialization)
-    .then((res) => res.json())
+    .then(readApiResponse)
     .then((r) => r.data.content)
     .then((services) => {
       serviceSelect.innerHTML = "<option>اختر الخدمة المطلوبة</option>";
@@ -102,6 +112,7 @@ function fetchServices(specialization) {
     })
     .catch(() => {
       serviceSelect.innerHTML = "<option>حدث خطأ، حاول مرة أخرى</option>";
+      window.showErrorToast?.("تعذر تحميل الخدمات الطبية. حاول مرة أخرى.");
     })
     .finally(() => (serviceSelect.disabled = false));
 }
@@ -134,11 +145,12 @@ function checkEnableDatePicker() {
   dateInput.disabled = false;
 
   fetch("/api/appointments/booked-dates?doctorId=" + doctorId)
-    .then((r) => r.json())
+    .then(readApiResponse)
     .then((d) => d.data)
     .then((dates) => {
       bookedDates = dates;
-    });
+    })
+    .catch(() => window.showErrorToast?.("تعذر التحقق من المواعيد المتاحة. حاول مرة أخرى."));
 }
 
 doctorSelect.addEventListener("change", checkEnableDatePicker);
@@ -172,7 +184,7 @@ document
         "&date=" +
         selected,
     )
-      .then((r) => r.json())
+      .then(readApiResponse)
       .then((d) => d.data)
       .then((bookedSlots) => {
         slotsContainer.style.display = "block";
@@ -183,7 +195,8 @@ document
             slot.classList.add("time-slot-disabled");
           }
         });
-      });
+      })
+      .catch(() => window.showErrorToast?.("تعذر تحميل الفترات المتاحة لهذا اليوم. حاول مرة أخرى."));
   });
 
 document.querySelectorAll(".time-slot").forEach((slot) => {
