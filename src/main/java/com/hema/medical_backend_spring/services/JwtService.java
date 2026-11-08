@@ -32,6 +32,7 @@ public class JwtService {
                 .claim("userId", userDetails.getProjectUser().getId())
                 .claim("userRole", userDetails.getProjectUser().getRole().toString())
                 .claim("isActive", userDetails.isActive())
+                .claim("photoUrl", userDetails.getProjectUser().getPhoto())
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(getSigningKey())
@@ -50,6 +51,10 @@ public class JwtService {
         return extractClaim(token, claims -> claims.get("userRole", String.class));
     }
 
+    public String extractPhotoUrl(String token) {
+        return extractClaim(token, claims -> claims.get("photoUrl", String.class));
+    }
+    
     public boolean extractIsActive(String token) {
         return extractClaim(token, claims -> claims.get("isActive", Boolean.class));
     }

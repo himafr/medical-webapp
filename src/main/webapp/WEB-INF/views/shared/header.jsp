@@ -59,7 +59,7 @@
                 <p class="text-gold">${role =="PATIENT"?"مريض ذهبي ":role =="ADMIN"?"مسؤول ذهبي" :"دكتور ذهبي " }</p>
 
             </div>
-            <img src="/images/default.png" width="40" alt="user" class="avatar">
+            <img src="${photoUrl}" width="40" height="40" alt="user" class="avatar">
         </div>
 
         <div class="mobile-menu mobile-menu-right" >

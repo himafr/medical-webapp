@@ -15,6 +15,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class CertificationService {
     private final CertificationRepository certificationRepository;
+    private final S3Service s3Service;
 
     public Certification getCertificationById(Long id, Authentication authentication) {
         return certificationRepository.findByIdAndDoctorId(id, HelperDto.getProjectUser(authentication).getId().longValue())
@@ -28,13 +29,26 @@ public class CertificationService {
     }
 
     public void editCertification(Certification certification, Authentication authentication) {
-        certificationRepository.updateCertification(certification.getId(),
-                HelperDto.getProjectUser(authentication).getId(), certification.getName(), certification.getPlace(),
+        Long doctorId = HelperDto.getProjectUser(authentication).getId();
+        Certification existing = getCertificationById(certification.getId(), authentication);
+        int updatedRows = certificationRepository.updateCertification(certification.getId(),
+                doctorId, certification.getName(), certification.getPlace(),
                 certification.getOrganization(), certification.getPhoto());
+
+        if (updatedRows > 0 && certification.getPhoto() != null
+                && !certification.getPhoto().equals(existing.getPhoto())) {
+            s3Service.deleteImageByUrl(existing.getPhoto());
+        }
     }
 
     public int deleteCertification(long id, Authentication authentication) {
-     return  certificationRepository.deleteByIdAndDoctorId(id, HelperDto.getProjectUser(authentication).getId());
+        Certification certification = getCertificationById(id, authentication);
+        int deletedRows = certificationRepository.deleteByIdAndDoctorId(id,
+                HelperDto.getProjectUser(authentication).getId());
+        if (deletedRows > 0) {
+            s3Service.deleteImageByUrl(certification.getPhoto());
+        }
+        return deletedRows;
     }
 
 }

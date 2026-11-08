@@ -2,6 +2,7 @@ package com.hema.medical_backend_spring.api;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Map;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -53,16 +54,20 @@ public class UserApi {
             return ResponseEntity.status(400).body(ApiResponse.error(400, "تعذر تحديث البيانات. يرجى التحقق من المدخلات والمحاولة مرة أخرى"));
         }
     }
-
+    // UPDATE USER WITH PHOTO
     @PutMapping(value = "", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ApiResponse> updateUserWithPhoto(
             @RequestPart("data") UserPersonalDetailsDto dto,
             @RequestPart(value = "photo", required = false) MultipartFile photo,
-            Principal principal) throws IOException {
+            Principal principal, HttpServletResponse response) throws IOException {
         String photoUrl = photo != null && !photo.isEmpty()
                 ? s3Service.getImageUrl(s3Service.uploadImage(photo))
                 : null;
         userService.updateUser(dto, principal.getName(), photoUrl);
+        if (photoUrl != null) {
+            String token = userService.refreshJwtToken(principal.getName(),photoUrl, response);
+            return ResponseEntity.ok(ApiResponse.success("تم تحديث البيانات بنجاح ", Map.of("token", token)));
+        }
         return ResponseEntity.ok(ApiResponse.success("تم تحديث البيانات بنجاح "));
     }
 

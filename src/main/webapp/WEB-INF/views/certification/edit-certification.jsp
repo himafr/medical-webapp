@@ -28,7 +28,7 @@
                     <div class="profile-top">
                         <div class="section-title" style="margin-bottom:0">اضافة شهاده </div>
                     </div>
-                    <form class="mb-3 mt-3" action="/doctors/edit-certification/${certification.id}" method="post" onsubmit="this.querySelector('button[type=submit]').disabled=true">
+                    <form class="mb-3 mt-3" action="/doctors/edit-certification/${certification.id}" method="post" enctype="multipart/form-data" onsubmit="this.querySelector('button[type=submit]').disabled=true">
                         <div class="info-grid " style="grid-template-columns: 1fr" >
                             <div class="info-item ">
                                 <label>الاسم </label>
@@ -42,22 +42,58 @@
                                 <label> البلد /المدينه</label>
                                 <input class="form-control" type="text" name="place" value="${certification.place}" style="direction:rtl" >
                             </div>
+                            <div class="info-item">
+                                <label for="photoFile">تغيير صورة الشهادة (اختياري)</label>
+                                <input id="photoFile" class="form-control" type="file" name="photoFile" accept="image/*">
+                                <%
+                                    String existingPhoto = ((com.hema.medical_backend_spring.model.sub.Certification) request
+                                            .getAttribute("certification")).getPhoto();
+                                    if (existingPhoto != null && !existingPhoto.isBlank()) {
+                                %>
+                                <img id="photoPreview" src="<%= org.springframework.web.util.HtmlUtils.htmlEscape(existingPhoto) %>"
+                                     alt="صورة الشهادة الحالية" style="display:block;max-width:100%;max-height:300px;margin-top:12px">
+                                <%
+                                    } else {
+                                %>
+                                <img id="photoPreview" alt="معاينة صورة الشهادة"
+                                     style="display:none;max-width:100%;max-height:300px;margin-top:12px">
+                                <%
+                                    }
+                                %>
+                            </div>
 
                         </div>
-                        <div style="display:flex; gap:10px; margin-top:15px">
+                        <div style="display:flex; align-items:center; gap:10px; margin-top:15px">
                             <button class="btn-primary" type="submit">حفظ</button>
                             <button class="btn-secondary" type="button" onclick="window.history.back()">إلغاء</button>
+                            <button class="btn btn-delete" type="submit" form="deleteCertificationForm"
+                                    onclick="return confirm('هل أنت متأكد من حذف الشهادة؟')">مسح الشهادة</button>
                         </div>
                     </form>
-                    <form action="/doctors/delete-certification/${certification.id}" method="post">
-                            <button class="btn btn-danger" style="max-width:150px" type="submit">مسح الشهادة</button>
-                    </form>
+                    <form id="deleteCertificationForm" action="/doctors/delete-certification/${certification.id}" method="post"></form>
 
 
                 </section>
             </div>
             <%@ include file="../shared/footer.jsp" %>
             <script src="/js/bootstrap.min.js"></script>
+            <script>
+                const photoInput = document.getElementById("photoFile");
+                const photoPreview = document.getElementById("photoPreview");
+                let previewUrl;
+
+                photoInput.addEventListener("change", function () {
+                    if (previewUrl) {
+                        URL.revokeObjectURL(previewUrl);
+                    }
+
+                    if (this.files && this.files[0]) {
+                        previewUrl = URL.createObjectURL(this.files[0]);
+                        photoPreview.src = previewUrl;
+                        photoPreview.style.display = "block";
+                    }
+                });
+            </script>
 
         </body>
     </html>

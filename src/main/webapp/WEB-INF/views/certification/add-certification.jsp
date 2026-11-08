@@ -25,7 +25,7 @@
                     <div class="profile-top">
                         <div class="section-title" style="margin-bottom:0">اضافة شهاده </div>
                     </div>
-                    <form class="mb-3 mt-3" action="/doctors/add-certification" method="post" onsubmit="this.querySelector('button[type=submit]').disabled=true">
+                    <form class="mb-3 mt-3" action="/doctors/add-certification" method="post" enctype="multipart/form-data" onsubmit="this.querySelector('button[type=submit]').disabled=true">
                         <div class="info-grid " style="grid-template-columns: 1fr" >
                             <div class="info-item ">
                                 <label>الاسم </label>
@@ -38,6 +38,10 @@
                             <div class="info-item">
                                 <label> البلد /المدينه</label>
                                 <input class="form-control" type="text" name="place" style="direction:rtl" >
+                            </div>
+                            <div class="info-item">
+                                <label for="photoFile">صورة الشهادة (اختياري)</label>
+                                <input id="photoFile" class="form-control" type="file" name="photoFile" accept="image/*">
                             </div>
 
                         </div>

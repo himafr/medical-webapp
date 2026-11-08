@@ -1,6 +1,5 @@
 package com.hema.medical_backend_spring.api;
 
-import java.io.IOException;
 import java.security.Principal;
 import java.util.Map;
 
@@ -12,18 +11,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.hema.medical_backend_spring.dto.ApiResponse;
 import com.hema.medical_backend_spring.dto.DoctorResponseDto;
 import com.hema.medical_backend_spring.dto.UpdateDoctorDto;
 import com.hema.medical_backend_spring.mapper.DoctorMapper;
-import com.hema.medical_backend_spring.model.Doctor;
 import com.hema.medical_backend_spring.services.DoctorService;
-import com.hema.medical_backend_spring.services.S3Service;
 
 import lombok.AllArgsConstructor;
 
@@ -33,7 +28,6 @@ import lombok.AllArgsConstructor;
 public class DoctorApi {
 
         private final DoctorService doctorService;
-        private final S3Service s3Service;
 
         @GetMapping("")
         public ResponseEntity<ApiResponse> getDoctors(
@@ -81,16 +75,17 @@ public class DoctorApi {
                 return ResponseEntity.ok().body(Map.of("message", "تم تعديل البيانات بنجاح"));
         }
 
-        @PutMapping(value = "", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-        public ResponseEntity<Map<String, String>> updateCareerDetailsWithPhoto(
-                        @RequestPart("data") UpdateDoctorDto dto,
-                        @RequestPart(value = "photo", required = false) MultipartFile photo,
-                        Authentication authentication) throws IOException {
-                String photoUrl = photo != null && !photo.isEmpty()
-                                ? s3Service.getImageUrl(s3Service.uploadImage(photo))
-                                : null;
-                doctorService.updateDoctor(dto, authentication, photoUrl);
-                return ResponseEntity.ok().body(Map.of("message", "تم تعديل البيانات بنجاح"));
-        }
+
+        // @PutMapping(value = "", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+        // public ResponseEntity<Map<String, String>> updateCareerDetailsWithPhoto(
+        //                 @RequestPart("data") UpdateDoctorDto dto,
+        //                 @RequestPart(value = "photo", required = false) MultipartFile photo,
+        //                 Authentication authentication) throws IOException {
+        //         String photoUrl = photo != null && !photo.isEmpty()
+        //                         ? s3Service.getImageUrl(s3Service.uploadImage(photo))
+        //                         : null;
+        //         doctorService.updateDoctor(dto, authentication, photoUrl);
+        //         return ResponseEntity.ok().body(Map.of("message", "تم تعديل البيانات بنجاح"));
+        // }
 
 }

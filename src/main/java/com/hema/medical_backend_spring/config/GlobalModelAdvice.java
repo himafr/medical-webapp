@@ -30,6 +30,7 @@ public class GlobalModelAdvice {
                     model.addAttribute("username", jwtService.extractEmail(token));
                     model.addAttribute("role", jwtService.extractRole(token));
                     model.addAttribute("isActive", jwtService.extractIsActive(token));
+                    model.addAttribute("photoUrl", jwtService.extractPhotoUrl(token));
                 } catch (Exception ignored) {}
                 break;
             }

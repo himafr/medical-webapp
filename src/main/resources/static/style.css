@@ -540,7 +540,8 @@ section {
 .btn-signup,
 .btn-login,
 .dashboard-link,
-.whats-button {
+.whats-button,
+.btn-delete {
   transition: transform 180ms var(--motion-ease), box-shadow 180ms var(--motion-ease),
     background-color 180ms var(--motion-ease), color 180ms var(--motion-ease);
 }
@@ -553,7 +554,8 @@ section {
 .btn-signup:hover,
 .btn-login:hover,
 .dashboard-link:hover,
-.whats-button:hover {
+.whats-button:hover,
+.btn-delete:hover {
   transform: translateY(-2px);
   box-shadow: 0 10px 24px rgba(13, 43, 26, 0.14);
 }
@@ -810,7 +812,8 @@ textarea.form-control {
 .btn-signup,
 .btn-login,
 .dashboard-link,
-.edit-btn {
+.edit-btn,
+.btn-delete {
   min-height: 44px;
   align-items: center;
   justify-content: center;
@@ -955,6 +958,29 @@ button[type="submit"]:disabled::after {
 
 .btn-secondary:hover {
   color: var(--primary-color);
+  padding-inline: 20px;
+  border-radius: 16px;
+  font-weight: 700;
+  border: 1px solid #c5a0594d;
+  background-color: #ffffff;
+}
+.btn-delete {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(163, 43, 43);
+  padding-inline: 20px;
+  border-radius: 16px;
+  font-weight: 700;
+  line-height: 1.5;
+  text-align: center;
+  white-space: normal;
+  border: 1px solid #c5a0594d;
+  background-color: #ffffff;
+}
+
+.btn-delete:hover {
+  color: rgba(163, 43, 43, 0.699);
   padding-inline: 20px;
   border-radius: 16px;
   font-weight: 700;
@@ -1246,6 +1272,7 @@ button[type="submit"]:disabled::after {
 /*oters */
 .avatar {
   border-radius: 50%;
+  object-fit: cover;
 }
 
 .input-holder {

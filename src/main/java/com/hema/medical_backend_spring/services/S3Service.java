@@ -9,6 +9,10 @@ import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
 @Service
@@ -58,5 +62,36 @@ public class S3Service {
                 .bucket(bucket)
                 .key(key)
                 .build());
+    }
+
+    public void deleteImageByUrl(String imageUrl) {
+        if (imageUrl == null || imageUrl.isBlank()) {
+            return;
+        }
+
+        URL url;
+        try {
+            url = new URL(imageUrl);
+        } catch (MalformedURLException e) {
+            return;
+        }
+
+        String expectedHost = bucket + ".s3." + region + ".amazonaws.com";
+        if (!"https".equalsIgnoreCase(url.getProtocol())
+                || !expectedHost.equalsIgnoreCase(url.getHost())
+                || url.getQuery() != null
+                || url.getRef() != null) {
+            return;
+        }
+
+        String normalizedFolder = folder.replaceAll("^/+|/+$", "");
+        String path = url.getPath();
+        String folderPrefix = "/" + normalizedFolder + "/";
+        if (!path.startsWith(folderPrefix)) {
+            return;
+        }
+
+        String key = URLDecoder.decode(path.substring(1).replace("+", "%2B"), StandardCharsets.UTF_8);
+        deleteImage(key);
     }
 }

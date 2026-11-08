@@ -53,7 +53,7 @@
             </section>
 
             <%-- //TODO super important remove this in production  --%>
-            <%= exception.printStackTrace() %>
+            <%-- <%= exception.printStackTrace() %> --%>
                 
 
             <%@ include file="shared/toast.jsp" %>

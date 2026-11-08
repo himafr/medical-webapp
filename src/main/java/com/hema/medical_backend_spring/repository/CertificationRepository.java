@@ -26,7 +26,7 @@ public interface CertificationRepository extends JpaRepository<Certification, Lo
        @Modifying
        @Transactional
        @Query("UPDATE Certification c SET c.name = :name, c.place = :place, c.organization = :organization, c.photo = COALESCE(:photo, c.photo) WHERE c.id = :id AND c.doctor.id = :doctorId")
-       void updateCertification(@Param("id") Long id,
+       int updateCertification(@Param("id") Long id,
                      @Param("doctorId") Long doctorId,
                      @Param("name") String name,
                      @Param("place") String place,

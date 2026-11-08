@@ -24,7 +24,7 @@
                         <img src="./svgs/edit.svg" alt="edit" width="35" class="edit-icon"  onclick="toggleEditPersonalDetails()" >
                         <div class="doctor-details">
                             <div class="flex-between " style="gap:20px">
-                                <img class="avatar"  src="./images/${user.photo}" alt="user photo">
+                                <img class="avatar"  src="${photoUrl}" alt="user photo">
                                 <div>
                                     <div class="info-username mb-3"> ${user.fullName}</div>
                                     <div class="info-major">${user.specialization}</div>
@@ -41,7 +41,7 @@
                             <div class="section-title" style="margin-bottom:0">تعديل المعلومات الشخصية</div>
                             <img src="./svgs/close.svg" alt="cancel" width="35" class="edit-icon" onclick="toggleEditPersonalDetails()">
                         </div>
-                        <form class="mb-3 mt-3" action="/users/update-personal-details" method="post" onsubmit="this.querySelector('button[type=submit]').disabled=true">
+                        <form class="mb-3 mt-3" action="/users/update-personal-details" method="post" enctype="multipart/form-data" onsubmit="this.querySelector('button[type=submit]').disabled=true">
                             <div class="info-grid ">
                                 <div class="info-item">
                                     <label>الاسم الكامل</label>
@@ -69,6 +69,10 @@
                                 <div class="info-item">
                                     <label>العنوان</label>
                                     <input class="form-control" type="text" name="address" value="${user.address}">
+                                </div>
+                                <div class="info-item">
+                                    <label for="photo">الصورة الشخصية (اختياري)</label>
+                                    <input id="photo" class="form-control" type="file" name="photoFile" accept="image/*">
                                 </div>
                             </div>
                             <div style="display:flex; gap:10px; margin-top:15px">

@@ -9,6 +9,8 @@ import java.util.regex.Pattern;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 
 import com.hema.medical_backend_spring.config.CustomUserDetails;
 import com.hema.medical_backend_spring.dto.UpdatePasswordDto;
@@ -44,6 +46,7 @@ public class UserService {
     private final EmailService emailService;
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
+    private final S3Service s3Service;
 
     public void registerPatient(ProjectUser user) {
 
@@ -93,12 +96,31 @@ public class UserService {
             throw new IllegalArgumentException("يجب أن يكون العمر 12 عامًا على الأقل");
         }
 
+        ProjectUser user = photo != null
+                ? userRepo.findByEmail(email).orElseThrow(
+                        () -> new com.hema.medical_backend_spring.exception.UserNotFoundException("لم يتم العثور على المستخدم"))
+                : null;
         int updatedRows = userRepo.updateUserInfo(email, name, dto.getDateOfBirth(), address, gender, phone,
                 photo);
 
         if (updatedRows == 0) {
             throw new com.hema.medical_backend_spring.exception.UserNotFoundException("لم يتم العثور على المستخدم");
         }
+        if (user != null && !photo.equals(user.getPhoto())) {
+            s3Service.deleteImageByUrl(user.getPhoto());
+        }
+    }
+
+    public String refreshJwtToken(String email,String photoUrl, HttpServletResponse response) {
+        CustomUserDetails userDetails = (CustomUserDetails) userDetailsService.loadUserByUsername(email);
+        userDetails.getProjectUser().setPhoto(photoUrl);
+        String token = jwtService.generateToken(userDetails);
+         Cookie cookie = new Cookie("jwt", token);
+        cookie.setHttpOnly(true);
+        cookie.setPath("/");
+        cookie.setMaxAge(86400);
+        response.addCookie(cookie);
+        return token;
     }
 
     @Transactional
@@ -127,7 +149,12 @@ public class UserService {
     @SuppressWarnings("null")
     public void deleteAccount(Authentication authentication) {
         try {
-            userRepo.deleteById(HelperDto.getProjectUser(authentication).getId());
+            Long userId = HelperDto.getProjectUser(authentication).getId();
+            ProjectUser user = userRepo.findById(userId)
+                    .orElseThrow(() -> new com.hema.medical_backend_spring.exception.UserNotFoundException(
+                            "لم يتم العثور على المستخدم"));
+            userRepo.deleteById(userId);
+            s3Service.deleteImageByUrl(user.getPhoto());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
