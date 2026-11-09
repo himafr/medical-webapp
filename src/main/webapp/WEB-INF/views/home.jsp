@@ -367,7 +367,7 @@
                         موعد يناسبك.
                     </p>
 
-                <div class="row flex justify-content-around mt-md-5" >
+                <div class="col-12 flex justify-content-around mt-md-5" >
                     <a href="/book-appointment" class="btn btn-gold btn-lg text-gold col-5" style="border-radius: 12px; line-height: normal;"> احجز موعدك الآن</a>
                     <a href="tel:+201146839894" dir="ltr" class="btn btn-secondary btn-lg text-white col-5" style="background-color: inherit;">
              +201146839894 
