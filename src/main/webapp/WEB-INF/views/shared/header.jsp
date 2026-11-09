@@ -1,5 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
+<div class="page-loader" role="status" aria-label="جارٍ تحميل الصفحة">
+    <span class="page-loader__spinner" aria-hidden="true"></span>
+    <span>جارٍ تحميل الصفحة...</span>
+</div>
+
 <header>
     <div class="<%= request.getAttribute("username") != null?"hidden-sm":"" %>">
         <div class="header-logo-holder">
@@ -95,4 +100,5 @@
         <script src="/js/gsap.min.js" defer></script>
         <script src="/js/ScrollTrigger.min.js" defer></script>
         <script src="/js/scroll-reveal.js" defer></script>
+        <script src="/js/page-loader.js" defer></script>
     </header>

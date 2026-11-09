@@ -43,12 +43,14 @@ spring:
 logging:
 
     level:
+        root: OFF
         org:
+            hibernate: ERROR
             springframework:
-                security: ${SPRING_SECURITY_LOG_LEVEL:TRACE}
+                web: ERROR
 
     pattern:
-        console: ${LOGPATTERN_CONSOLE:%green(%d{HH:mm:ss.SSS}) %blue(%-5level) %red([%thread]) %yellow(%logger{15}) - %msg%n}
+        console: ${%green(%d{HH:mm:ss.SSS}) %blue(%-5level) %red([%thread]) %yellow(%logger{15}) - %msg%n}
 
 jwt:
     secret: ${SECRET_KEY}

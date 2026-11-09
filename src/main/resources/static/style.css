@@ -31,6 +31,51 @@ body {
   background-color: var(--page-color);
 }
 
+.page-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 12px;
+  background: var(--page-color);
+  color: var(--primary-color);
+  font-size: 16px;
+  transition: opacity 180ms ease, visibility 180ms ease;
+}
+
+.page-loader--hidden {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.page-loader__spinner {
+  width: 42px;
+  height: 42px;
+  border: 4px solid #1a3c3420;
+  border-top-color: var(--primary-text);
+  border-radius: 50%;
+  animation: page-loader-spin 800ms linear infinite;
+}
+
+@keyframes page-loader-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-loader__spinner {
+    animation: none;
+  }
+
+  .page-loader {
+    transition: none;
+  }
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 88px;
