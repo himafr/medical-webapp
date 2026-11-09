@@ -46,8 +46,9 @@ public class DoctorApi {
 
         @GetMapping("/me")
         public ResponseEntity<ApiResponse> getDoctor(
-                        Principal principal) {
-               DoctorResponseDto doctor= doctorService.getDoctor(principal.getName());
+                        Authentication authentication) {
+
+               DoctorResponseDto doctor= doctorService.getDoctor(authentication.getName());
                 ApiResponse res = ApiResponse.builder().status(200).message("تم عرض الطبيب بنجاح").data(doctor)
                                 .build();
 

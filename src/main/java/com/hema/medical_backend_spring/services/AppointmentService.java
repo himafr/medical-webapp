@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.hema.medical_backend_spring.dto.AppointmentDto;
+import com.hema.medical_backend_spring.dto.AppointmentResponseDto;
 import com.hema.medical_backend_spring.exception.NotValidTimeException;
 import com.hema.medical_backend_spring.exception.UserNotFoundException;
 import com.hema.medical_backend_spring.model.Appointment;
@@ -41,6 +42,11 @@ public class AppointmentService {
                 Patient patient = patientRepository.findByEmail(patientEmail)
                                 .orElseThrow(() -> new UserNotFoundException("لم يتم العثور على المريض"));
                 return appointmentRepository.findByPatient(patient, pageable);
+        }
+        public List<AppointmentResponseDto> getTodayAppointmentsForDoctor(String email) {
+
+                Doctor doctor = doctorRepository.findByEmail(email);
+                return appointmentRepository.findByDoctorIdAndAppointmentDate(doctor.getId(), LocalDate.now());
         }
 
         public void createAppointment(AppointmentDto dto, String patientEmail) {

@@ -9,13 +9,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.hema.medical_backend_spring.dto.AppointmentResponseDto;
 import com.hema.medical_backend_spring.model.Appointment;
 import com.hema.medical_backend_spring.model.Patient;
 
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
     List<Appointment> findByDoctorId(Long doctorId);
 
-    List<Appointment> findByDoctorIdAndAppointmentDate(Long doctorId, LocalDate date);
+    List<AppointmentResponseDto> findByDoctorIdAndAppointmentDate(Long doctorId, LocalDate date);
 
     Page<Appointment> findByPatient(Patient patient, Pageable pageable);
 

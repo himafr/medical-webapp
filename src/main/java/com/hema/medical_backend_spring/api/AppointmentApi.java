@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,27 +29,38 @@ public class AppointmentApi {
     private final AppointmentService appointmentService;
 
     @GetMapping("")
-    public ResponseEntity<ApiResponse> getAppointments(Principal principal, @RequestParam(required = false) String specialty,
+    public ResponseEntity<ApiResponse> getAppointments(Principal principal,
+            @RequestParam(required = false) String specialty,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         Page<Appointment> appointmentsPage = appointmentService.getAppointmentsForPatient(principal.getName(), page,
                 size);
-    return ResponseEntity.ok(ApiResponse.success("تم جلب المواعيد بنجاح",appointmentsPage));
+        return ResponseEntity.ok(ApiResponse.success("تم جلب المواعيد بنجاح", appointmentsPage));
+    }
+
+    // الدكتور يشوف مواعيده
+    @GetMapping("/doctor-today")
+    public ResponseEntity<ApiResponse> getDoctorAppointmentsForToday(Authentication authentication) {
+        return ResponseEntity.ok(ApiResponse.success("تم جلب مواعيد اليوم بنجاح ",
+                appointmentService.getTodayAppointmentsForDoctor(authentication.getName())));
     }
 
     @GetMapping("/booked-dates")
     public ResponseEntity<ApiResponse> getBookedDates(@RequestParam Long doctorId) {
-        return ResponseEntity.ok(ApiResponse.success("تواريخ اكتمال حجوزات الطبيب",appointmentService.getFullyBookedDates(doctorId)));
+        return ResponseEntity.ok(
+                ApiResponse.success("تواريخ اكتمال حجوزات الطبيب", appointmentService.getFullyBookedDates(doctorId)));
     }
+
     @GetMapping("/available-slots")
-    
+
     public ResponseEntity<ApiResponse> getAvailableSlots(@RequestParam Long doctorId,
-                                           @RequestParam String date) {
-        return ResponseEntity.ok(ApiResponse.success("الأوقات المحجوزة للطبيب في هذا التاريخ",appointmentService.getBookedSlots(doctorId, LocalDate.parse(date))));
+            @RequestParam String date) {
+        return ResponseEntity.ok(ApiResponse.success("الأوقات المحجوزة للطبيب في هذا التاريخ",
+                appointmentService.getBookedSlots(doctorId, LocalDate.parse(date))));
     }
 
     @PostMapping("")
-    public ResponseEntity<ApiResponse> bookAppointment(@Valid @RequestBody  AppointmentDto dto, Principal principal) {
+    public ResponseEntity<ApiResponse> bookAppointment(@Valid @RequestBody AppointmentDto dto, Principal principal) {
         appointmentService.createAppointment(dto, principal.getName());
         return ResponseEntity.ok(ApiResponse.success("تم حجز الموعد بنجاح"));
     }
@@ -70,14 +82,6 @@ public class AppointmentApi {
     // public ResponseEntity<List<AppointmentResponse>> getMyAppointments(
     // @AuthenticationPrincipal ProjectUser user) {
     // return ResponseEntity.ok(appointmentService.getPatientAppointments(user));
-    // }
-
-    // // الدكتور يشوف مواعيده
-    // @GetMapping("/doctor")
-    // @PreAuthorize("hasRole('DOCTOR')")
-    // public ResponseEntity<List<AppointmentResponse>> getDoctorAppointments(
-    // @AuthenticationPrincipal ProjectUser user) {
-    // return ResponseEntity.ok(appointmentService.getDoctorAppointments(user));
     // }
 
     // // الدكتور يأكد الحجز

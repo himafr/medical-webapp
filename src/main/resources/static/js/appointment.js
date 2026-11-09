@@ -79,7 +79,7 @@ function handleSpecializationChange() {
 }
 
 function fetchServices(specialization) {
-  fetch("/api/services?specialization=" + specialization)
+  fetch("/api/services?specialty=" + specialization)
     .then(readApiResponse)
     .then((r) => r.data.content)
     .then((services) => {
