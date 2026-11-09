@@ -1,9 +1,12 @@
 version: '3.8'
 services:
   medical_spring:
-    build: .  
+    image: royal-hospital
+    build: .
     container_name: medical_spring_container
     ports:
       - "8080:8080"
     env_file:
-      - .env
+      - ./.env
+
+      
