@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.hema.medical_backend_spring.dto.AppointmentResponseDto;
 import com.hema.medical_backend_spring.model.Appointment;
+import com.hema.medical_backend_spring.model.Doctor;
 import com.hema.medical_backend_spring.model.Patient;
 
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
@@ -18,7 +19,8 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 
     List<AppointmentResponseDto> findByDoctorIdAndAppointmentDate(Long doctorId, LocalDate date);
 
-    Page<Appointment> findByPatient(Patient patient, Pageable pageable);
+    Page<Appointment> findByPatientOrderByAppointmentDateDesc(Patient patient, Pageable pageable);
+    Page<Appointment> findByDoctorOrderByAppointmentDateDesc(Doctor doctor, Pageable pageable);
 
     @Query("SELECT COUNT(a) FROM Appointment a WHERE a.doctor.id = :doctorId AND a.appointmentDate = :date")
     Long countByDoctorIdAndDate(@Param("doctorId") Long doctorId, @Param("date") LocalDate date);

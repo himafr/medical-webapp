@@ -41,8 +41,16 @@ public class AppointmentService {
 
                 Patient patient = patientRepository.findByEmail(patientEmail)
                                 .orElseThrow(() -> new UserNotFoundException("لم يتم العثور على المريض"));
-                return appointmentRepository.findByPatient(patient, pageable);
+                return appointmentRepository.findByPatientOrderByAppointmentDateDesc(patient, pageable);
         }
+
+        public Page<Appointment> getAppointmentsForDoctor(String doctorEmail, int page, int size) {
+                Pageable pageable = PageRequest.of(page, size);
+
+                Doctor doctor = doctorRepository.findByEmail(doctorEmail);
+                return appointmentRepository.findByDoctorOrderByAppointmentDateDesc(doctor, pageable);
+        }
+
         public List<AppointmentResponseDto> getTodayAppointmentsForDoctor(String email) {
 
                 Doctor doctor = doctorRepository.findByEmail(email);
@@ -90,7 +98,8 @@ public class AppointmentService {
         }
 
         public List<String> getBookedSlots(Long doctorId, LocalDate date) {
-                if (date.getDayOfWeek() == DayOfWeek.FRIDAY)throw new IllegalArgumentException("لا يمكن الحجز يوم الجمعة، يرجى اختيار يوم آخر.");
+                if (date.getDayOfWeek() == DayOfWeek.FRIDAY)
+                        throw new IllegalArgumentException("لا يمكن الحجز يوم الجمعة، يرجى اختيار يوم آخر.");
 
                 return appointmentRepository.findByDoctorIdAndAppointmentDate(doctorId, date)
                                 .stream()

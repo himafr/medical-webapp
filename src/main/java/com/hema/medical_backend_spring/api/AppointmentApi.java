@@ -37,6 +37,15 @@ public class AppointmentApi {
                 size);
         return ResponseEntity.ok(ApiResponse.success("تم جلب المواعيد بنجاح", appointmentsPage));
     }
+    @GetMapping("/doctor")
+    public ResponseEntity<ApiResponse> getAppointmentsForDoctor(Principal principal,
+            @RequestParam(required = false) String specialty,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Page<Appointment> appointmentsPage = appointmentService.getAppointmentsForDoctor(principal.getName(), page,
+                size);
+        return ResponseEntity.ok(ApiResponse.success("تم جلب المواعيد بنجاح", appointmentsPage));
+    }
 
     // الدكتور يشوف مواعيده
     @GetMapping("/doctor-today")
