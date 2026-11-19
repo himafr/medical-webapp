@@ -1,62 +1,59 @@
 spring:
-    application:
-        name: medical_backend_spring
+  application:
+    name: medical_backend_spring
 
-    
-    servlet:
-        multipart:
-            max-file-size: 5MB
-            max-request-size: 5MB
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
 
-# database credentials
-    datasource:
-        url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/medical_db}
-        username: ${DATABASE_USERNAME:postgres}
-        password: ${DATABASE_PASSWORD:0000}
-        driver-class-name: org.postgresql.Driver
+  # database credentials
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/medical_db}
+    username: ${DATABASE_USERNAME:postgres}
+    password: ${DATABASE_PASSWORD:0000}
+    driver-class-name: org.postgresql.Driver
 
-#hibernate settings
-    jpa:
-        hibernate.ddl-auto: update
-        show-sql: ${SHOW_SQL:false}
-# spring.jpa.properties.hibernate.format_sql=true
+  #hibernate settings
+  jpa:
+    hibernate.ddl-auto: update
+    show-sql: ${SHOW_SQL:false}
+  # spring.jpa.properties.hibernate.format_sql=true
 
-#jsp settings
-    mvc:
-        view:
-            suffix: .jsp
-            prefix: ${JSP_PREFIX:/WEB-INF/views/}
-    mail:
-        host: smtp.gmail.com
-        port: 587
-        username: ${EMAIL_USERNAME}
-        password: ${EMAIL_PASSWORD}
-        properties:
-            mail:
-                smtp:
-                    auth: true
-                    starttls:
-                        enable: true
-      
+  #jsp settings
+  mvc:
+    view:
+      suffix: .jsp
+      prefix: ${JSP_PREFIX:/WEB-INF/views/}
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${EMAIL_USERNAME}
+    password: ${EMAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
 #logging settings
 logging:
-
     level:
-        root: OFF
+
         org:
-            hibernate: ERROR
+
             springframework:
-                web: ERROR
+                security: ${SPRING_SECURITY_LOG_LEVEL:TRACE}
 
     pattern:
-        console: ${%green(%d{HH:mm:ss.SSS}) %blue(%-5level) %red([%thread]) %yellow(%logger{15}) - %msg%n}
+        console: ${LOGPATTERN_CONSOLE:%green(%d{HH:mm:ss.SSS}) %blue(%-5level) %red([%thread]) %yellow(%logger{15}) - %msg%n}
+
+ 
 
 jwt:
-    secret: ${SECRET_KEY}
-    expiration: ${EXPIRATION:86400000}
-
-
+  secret: ${SECRET_KEY}
+  expiration: ${EXPIRATION:86400000}
 
 aws:
   region: ${AWS_REGION:us-east-1}
